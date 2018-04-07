@@ -1,7 +1,11 @@
 /*jshint esversion: 6 */
+//SENDBIRD 
+var appId="C467D171-6024-43EC-9943-FE2E0478AFBD";
+var apiToken="623cd37c96fc7faf33dd41b5e68894169d567d91";
+
 
 //Ajax 
-var queryURL = "";
+var queryURL = "https://api.sendbird.com";
 $.ajax({
     url: queryURL,
     method: "GET"
