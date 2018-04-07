@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>GIFtastic</title>
+    <title>RezQ</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--Reset style-->
     <link rel="stylesheet" type="text/css" media="screen" href="../Group-Project-1/Assets/css/reset.css" />
@@ -18,8 +18,98 @@
 </head>
 
 <body>
+    <header>
+        <div class="container-fluid bg-dark text-light">
+            <div class="row  px-4 py-3">
+                <div id="wthrData" class="col-6">
+                  <div id="location">Your Location: Los Angeles</div>
+                    <div id="longLat">Long: 34.0522° N, Lat: 118.2437°</div>
+                    <div id="conDish"> Conditions : Cloudy Temp: 85° F</div>
+                </div>
+                <div class="col-6 d-flex d-flex justify-content-end">
+                        <h1 class="d-flex  align-self-center">ReZQ</h1>
+                    </div>
+            </div>
+        </div>
+    </header>
+    <section id="reportArea">
+<div class="container">
+    <div class="row">
+        <div class="col-6 py-5 px-3">
+        <div id="heading" class="d-flex flex-row">
+         <h2>Get RezQewd</h2><span class="lead"><em class="px-2 py-1 d-flex  align-self-center">"Getting you help faster"</em></span>
+        </div>
+                <form>
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                                <div class="input-group">
+                                        <div class="input-group-prepend d-flex flex-row">
+                                                <label for="">Who needs RezQing?</label>
+                                              
+                                              
+                                                <div class="custom-control custom-radio">
+                                                       
+                                                        <input id="customRadio1" name="customRadio" class="custom-control-input" type="radio">
+                                                        <label class="custom-control-label" for="customRadio1">Toggle this custom radio</label>
+                                                      </div>
+                                                      <div class="custom-control custom-radio">
+                                                        <input id="customRadio2" name="customRadio" class="custom-control-input" type="radio">
+                                                        <label class="custom-control-label" for="customRadio2">Or toggle this other custom radio</label>
+                                                      </div>
+                                          
+                                        </div>
+                                        
+                                      </div>
 
-    
+                          </div>
+                          <div class="form-group col-md-6">
+                            <label for="inputPassword4">Password</label>
+                            <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="inputAddress">Address</label>
+                          <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                        </div>
+                        <div class="form-group">
+                          <label for="inputAddress2">Address 2</label>
+                          <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <label for="inputCity">City</label>
+                            <input type="text" class="form-control" id="inputCity">
+                          </div>
+                          <div class="form-group col-md-4">
+                            <label for="inputState">State</label>
+                            <select id="inputState" class="form-control">
+                              <option selected>Choose...</option>
+                              <option>...</option>
+                            </select>
+                          </div>
+                          <div class="form-group col-md-2">
+                            <label for="inputZip">Zip</label>
+                            <input type="text" class="form-control" id="inputZip">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="gridCheck">
+                            <label class="form-check-label" for="gridCheck">
+                              Check me out
+                            </label>
+                          </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Sign in</button>
+                      </form>
+        </div>
+        <div class="col-6">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d423286.27405770525!2d-118.69192047471653!3d34.02016130653294!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2c75ddc27da13%3A0xe22fdf6f254608f4!2sLos+Angeles%2C+CA!5e0!3m2!1sen!2sus!4v1523133404297" width="600" height="650" frameborder="0" style="border:0" allowfullscreen></iframe>
+            </div>
+    </div>
+</div>
+    </section>
+
 
 
     <!-- jQuery CDN -->
@@ -31,7 +121,7 @@
     <!--popper-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
-        <script src="Assets/javascript/app.js"></script>
+    <script src="Assets/javascript/app.js"></script>
 </body>
 
 </html>
