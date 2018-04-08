@@ -21,95 +21,136 @@
     <header>
         <div class="container-fluid bg-dark text-light">
             <div class="row  px-4 py-3">
-                <div id="wthrData" class="col-6">
-                  <div id="location">Your Location: Los Angeles</div>
+                <div id="wthrData" class="col-12 col-md-6 text-center text-md-left">
+                    <div id="location">Your Location: Los Angeles</div>
                     <div id="longLat">Long: 34.0522° N, Lat: 118.2437°</div>
                     <div id="conDish"> Conditions : Cloudy Temp: 85° F</div>
                 </div>
-                <div class="col-6 d-flex d-flex justify-content-end">
-                        <h1 class="d-flex  align-self-center">ReZQ</h1>
-                    </div>
+                <div class="col-12 col-md-6 d-flex d-flex justify-content-center justify-content-md-end">
+                    <h1 class="d-flex align-self-center mt-3 mt-md-0">ReZQ</h1>
+                </div>
             </div>
         </div>
     </header>
     <section id="reportArea">
-<div class="container">
-    <div class="row">
-        <div class="col-6 py-5 px-3">
-        <div id="heading" class="d-flex flex-row">
-         <h2>Get RezQewd</h2><span class="lead"><em class="px-2 py-1 d-flex  align-self-center">"Getting you help faster"</em></span>
-        </div>
-                <form>
-                        <div class="form-row">
-                          <div class="form-group col-md-6">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-6 py-4 px-3">
+                    <div id="heading" class="d-flex flex-column flex-md-row text-center text-md-left mb-3 mt-2 px-2">
+                        <h2>Get RezQewd</h2>
+                        <span class="lead ml-2 text-center text-md-left">
+                            <em class="px-0 px-md-2 py-1 d-flex  align-self-center justify-content-center justify-content-md-start">"Getting you help faster"</em>
+                        </span>
+                    </div>
+                    <form>
+                        <div class="form-row pb-2 mt-3">
+                            <div class="form-group col-md-6">
                                 <div class="input-group">
-                                        <div class="input-group-prepend d-flex flex-row">
-                                                <label for="">Who needs RezQing?</label>
-                                              
-                                              
-                                                <div class="custom-control custom-radio">
-                                                       
-                                                        <input id="customRadio1" name="customRadio" class="custom-control-input" type="radio">
-                                                        <label class="custom-control-label" for="customRadio1">Toggle this custom radio</label>
-                                                      </div>
-                                                      <div class="custom-control custom-radio">
-                                                        <input id="customRadio2" name="customRadio" class="custom-control-input" type="radio">
-                                                        <label class="custom-control-label" for="customRadio2">Or toggle this other custom radio</label>
-                                                      </div>
-                                          
-                                        </div>
-                                        
-                                      </div>
+                                    <div class="input-group-prepend d-flex flex-column">
+                                        <label for="">Who needs RezQing?</label>
+                                        <div class="custom-control custom-radio">
 
-                          </div>
-                          <div class="form-group col-md-6">
-                            <label for="inputPassword4">Password</label>
-                            <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
-                          </div>
+                                            <input id="person" name="customRadio" class="custom-control-input" type="radio">
+                                            <label class="custom-control-label" for="person">Is this for you?</label>
+                                        </div>
+                                        <div class="custom-control custom-radio">
+                                            <input id="notPerson" name="customRadio" class="custom-control-input" type="radio">
+                                            <label class="custom-control-label" for="notPerson">Is this for someone else?</label>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="input-group">
+                                    <div class="input-group-prepend d-flex flex-column">
+                                        <label for="">Person's Gender</label>
+                                        <div class="custom-control custom-radio">
+
+                                            <input id="male" name="customRadio" class="custom-control-input" type="radio">
+                                            <label class="custom-control-label" for="male">Male</label>
+                                        </div>
+                                        <div class="custom-control custom-radio">
+                                            <input id="female" name="customRadio" class="custom-control-input" type="radio">
+                                            <label class="custom-control-label" for="female">Female</label>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                          <label for="inputAddress">Address</label>
-                          <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-                        </div>
-                        <div class="form-group">
-                          <label for="inputAddress2">Address 2</label>
-                          <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+                        <div class="form-group mt-2">
+                            <label for="inputName">First Name of person in emergency </label>
+                            <input type="text" class="form-control" id="inputName" placeholder="ex: Harry P.">
                         </div>
                         <div class="form-row">
-                          <div class="form-group col-md-6">
-                            <label for="inputCity">City</label>
-                            <input type="text" class="form-control" id="inputCity">
-                          </div>
-                          <div class="form-group col-md-4">
-                            <label for="inputState">State</label>
-                            <select id="inputState" class="form-control">
-                              <option selected>Choose...</option>
-                              <option>...</option>
+                            <div class="form-group col-md-3">
+                                <label for="inputAge">Age</label>
+                                <input type="text" class="form-control" id="inputAge" placeholder="ex: 22">
+                            </div>
+                            <div class="form-group col-md-9">
+                                <label for="inputNumber">Your phone number</label>
+                                <input type="text" class="form-control" id="inputName" placeholder="ex: 213-757-2732">
+                            </div>
+                        </div>
+                        <div class="form-group mt-3">
+                            <label for="loc">How alert is this person?</label>
+                            <select id="loc" class="form-control">
+                                <option selected>Choose an option</option>
+                                <option value="alert">Person is alert</option>
+                                <option value="abnormal">Person is behaving abnormally</option>
+                                <option value="abnormal">Person is alerted</option>
+                                <option value="unconscious">Person is unconscious</option>
                             </select>
-                          </div>
-                          <div class="form-group col-md-2">
-                            <label for="inputZip">Zip</label>
-                            <input type="text" class="form-control" id="inputZip">
-                          </div>
                         </div>
                         <div class="form-group">
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="gridCheck">
-                            <label class="form-check-label" for="gridCheck">
-                              Check me out
-                            </label>
-                          </div>
+                            <label for="allergies">Any allergic reactions?</label>
+                            <select id="allergies" class="form-control">
+                                <option selected>Choose an option</option>
+                                <option value="pollen">Pollen</option>
+                                <option value="dander">Animal Dander</option>
+                                <option value="stings">Insect Stings</option>
+                                <option value="mold">Mold</option>
+                                <option value="food">Food</option>
+                                <option value="latex">Latex</option>
+                                <option value="medications">Medication</option>
+                            </select>
                         </div>
-                        <button type="submit" class="btn btn-primary">Sign in</button>
-                      </form>
-        </div>
-        <div class="col-6">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d423286.27405770525!2d-118.69192047471653!3d34.02016130653294!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2c75ddc27da13%3A0xe22fdf6f254608f4!2sLos+Angeles%2C+CA!5e0!3m2!1sen!2sus!4v1523133404297" width="600" height="650" frameborder="0" style="border:0" allowfullscreen></iframe>
+                        <div class="form-group">
+                            <label for="mdclCond">Any preexisting medical conditions?</label>
+                            <select id="mdclCond" class="form-control">
+                                <option selected>Choose an option</option>
+                                <option value="hrtAttk">Heart Attack</option>
+                                <option value="stroke">Stroke</option>
+                                <option value="anaph">Anaphylaxis</option>
+                                <option value="hbs">High Blood Pressure</option>
+                                <option value="diab">Diabetes</option>
+                                <option value="asthma">Asthma</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-outline-info btn-lg w-100 mt-3">Report Emergency Now</button>
+                    </form>
+                </div>
+                <div class="col-12 col-md-6">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d423286.27405770525!2d-118.69192047471653!3d34.02016130653294!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2c75ddc27da13%3A0xe22fdf6f254608f4!2sLos+Angeles%2C+CA!5e0!3m2!1sen!2sus!4v1523133404297"
+                        width="600" height="750" frameborder="0" style="border:0" allowfullscreen></iframe>
+                </div>
             </div>
-    </div>
-</div>
+        </div>
     </section>
 
+    <footer>
+            <div class="container-fluid bg-dark text-light d-flex justify-content-center">
+                <div class="row px-4 py-3">
+                   <p class="mb-0">ReZQe Dashboard</p>
+                </div>
+            </div>
+        </footer>
 
 
     <!-- jQuery CDN -->
