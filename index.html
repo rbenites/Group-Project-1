@@ -48,12 +48,12 @@
                                         <label for="">Who needs RezQing?</label>
                                         <div class="custom-control custom-radio">
 
-                                            <input id="person" name="person" class="custom-control-input" type="radio">
-                                            <label class="custom-control-label" for="person" value="you">Is this for you?</label>
+                                            <input id="person" name="person" class="custom-control-input" type="radio" value="you">
+                                            <label class="custom-control-label" for="person" >Is this for you?</label>
                                         </div>
                                         <div class="custom-control custom-radio">
-                                            <input id="notPerson" name="person" class="custom-control-input" type="radio">
-                                            <label class="custom-control-label" for="notPerson" value="notYou">Is this for someone else?</label>
+                                            <input id="notPerson" value="notYou" name="person" class="custom-control-input" type="radio">
+                                            <label class="custom-control-label" for="notPerson">Is this for someone else?</label>
                                         </div>
 
                                     </div>
@@ -67,12 +67,12 @@
                                         <label for="">Person's Gender</label>
                                         <div class="custom-control custom-radio">
 
-                                            <input id="male" name="gender" class="custom-control-input" type="radio">
-                                            <label class="custom-control-label" for="male" value="male">Male</label>
+                                            <input id="male" name="gender" class="custom-control-input" type="radio" value="male">
+                                            <label class="custom-control-label" for="male">Male</label>
                                         </div>
                                         <div class="custom-control custom-radio">
-                                            <input id="female" name="gender" class="custom-control-input" type="radio">
-                                            <label class="custom-control-label" for="female" value="female">Female</label>
+                                            <input id="female" value="female" name="gender" class="custom-control-input" type="radio"g>it 
+                                            <label class="custom-control-label" for="female">Female</label>
                                         </div>
 
                                     </div>
@@ -87,11 +87,11 @@
                         <div class="form-row">
                             <div class="form-group col-md-3">
                                 <label for="inputAge">Age</label>
-                                <input type="text" class="form-control" id="inputAge" placeholder="ex: 22">
+                                <input type="text" class="form-control" id="inputAge" name='age' placeholder="ex: 22">
                             </div>
                             <div class="form-group col-md-9">
                                 <label for="inputNumber">Your phone number</label>
-                                <input type="text" class="form-control" id="inputName" placeholder="ex: 213-757-2732">
+                                <input type="text" class="form-control" id="inputName" name='number' placeholder="ex: 213-757-2732">
                             </div>
                         </div>
                         <div class="form-group mt-3">
@@ -120,11 +120,11 @@
                             <label for="mdclCond">Any preexisting medical conditions?</label>
                             <select id="mdclCond" class="form-control">
                                 <option selected>Choose an option</option>
-                                <option value="hrtAttk">Heart Attack</option>
+                                <option value="heartAttack">Heart Attack</option>
                                 <option value="stroke">Stroke</option>
-                                <option value="anaph">Anaphylaxis</option>
-                                <option value="hbs">High Blood Pressure</option>
-                                <option value="diab">Diabetes</option>
+                                <option value="anaphylaxis">Anaphylaxis</option>
+                                <option value="highBloodPressure">High Blood Pressure</option>
+                                <option value="diabetes">Diabetes</option>
                                 <option value="asthma">Asthma</option>
                                 <option value="other">Other</option>
                             </select>

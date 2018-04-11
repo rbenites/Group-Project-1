@@ -7,6 +7,9 @@ var age = '';
 var number = '';
 var person = '';
 var gender = '';
+var loc = '';
+var aller = '';
+var  medical = '';
 var d = new Date();
 
 
@@ -54,20 +57,29 @@ function processForm() {
     var date = d.toLocaleString([], {
       hour12: true
     });
+    person = $(this).find('[name=person]').val().trim();
+    gender = $(this).find('[name=gender]').val().trim();
     name = $("#inputName").val().trim();
-    // age = parseInt($("#inputAge").val().trim());
-    // number = parseInt($("#inputNumber").val().trim());
+    age = $(this).find('[name=age]').val().trim();
+    number = $(this).find('[name=number]').val().trim();
     person = $('input[name=person]:checked').val();
     gender = $('input[name=gender]:checked').val();
+    loc = $("#loc").val().trim();
+    aller = $("#allergies").val().trim();
+    medical = $("#mdclCond").val().trim();
+
 
 
     database.ref().push({
       date: date,
       name: name,
-      // age: age,
-      // number: number,
+      age: age,
+      number: number,
       person: person,
-      gender: gender
+      gender: gender,
+      loc: loc,
+      allergies: aller,
+      medical: medical,
     }, function (errorObject) {
       console.log("The read failed: " + errorObject.code);
     });
