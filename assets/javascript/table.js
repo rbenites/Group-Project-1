@@ -1,7 +1,7 @@
 console.log("hi");
-const $table = $('#table');
-const $remove = $('#remove');
-let selections = [];
+var $table = $('#table');
+var $remove = $('#remove');
+var selections = [];
 
 function initTable() {
   $table.bootstrapTable({
@@ -15,14 +15,14 @@ function initTable() {
           align: 'center',
           valign: 'middle'
         }, {
-          title: 'Item ID',
+          title: 'Emergency ID',
           field: 'id',
           rowspan: 2,
           align: 'center',
           valign: 'middle',
           sortable: true
         }, {
-          title: 'Item Detail',
+          title: 'Emergency Contact',
           colspan: 3,
           align: 'center'
         }
@@ -30,13 +30,13 @@ function initTable() {
       [
         {
           field: 'name',
-          title: 'Item Name',
+          title: 'Name',
           sortable: true,
           editable: true,
           align: 'center'
         }, {
-          field: 'price',
-          title: 'Item Price',
+          field: 'age',
+          title: 'Age',
           sortable: true,
           align: 'center',
           editable: {
@@ -58,8 +58,8 @@ function initTable() {
           },
           footerFormatter: totalPriceFormatter
         }, {
-          field: 'operate',
-          title: 'Item Operate',
+          field: 'complete',
+          title: 'Mark Completed',
           align: 'center',
           events: operateEvents,
           formatter: operateFormatter
