@@ -20,15 +20,15 @@ var person = '';
 var gender = '';
 var loc = '';
 var aller = '';
-var  medical = '';
+var medical = '';
 var d = new Date();
 
 /* Start the JS setup with document.ready*/
 $(document).ready(function () {
   jsSetup();
-  $("input[name='gender']").on("click", function() {
+  $("input[name='gender']").on("click", function () {
     alert($(this).val());
-});
+  });
 });
 /* This function processes the form and sets the form data in the firebase DB in*/
 function processForm() {
@@ -37,7 +37,7 @@ function processForm() {
   $('#rezQForm').submit(function (e) {
 
     e.preventDefault();
-      /* Takes the date at the time of submit and formats it in 12 hour format */
+    /* Takes the date at the time of submit and formats it in 12 hour format */
     var date = d.toLocaleString([], {
       hour12: true
     });
@@ -52,7 +52,7 @@ function processForm() {
     loc = $("#loc").val().trim();
     aller = $("#allergies").val().trim();
     medical = $("#mdclCond").val().trim();
-/* This code pushes the form info to Firebase DB*/
+    /* This code pushes the form info to Firebase DB*/
     database.ref().push({
       date: date,
       name: name,
@@ -74,44 +74,43 @@ function jsSetup() {
   processForm();
 
 
-    // wunderground weather api
-    var queryURLLocation = "http://api.wunderground.com/api/828d2683238be78a/geolookup/q/autoip.json"
-    $.ajax({
-        url: queryURLLocation,
+  // wunderground weather api
+  var queryURLLocation = "http://api.wunderground.com/api/828d2683238be78a/geolookup/q/autoip.json";
+  $.ajax({
+    url: queryURLLocation,
+    method: "GET"
+  })
+    // this gets the location from the IP address from wunderground
+    .then(function (response) {
+      $("#location").html("You are in " + response.location.city);
+      $("#long").html(response.location.lon + " Longitude");
+      $("#lat").html(response.location.lat + " Latitude");
+
+
+      // grabbing the city name and location from the api 
+      // cityName grabs the name of the city from the API for use on the open weather map api 
+      var cityName = response.location.city;
+
+      // open weather map api
+      var queryURLWeather = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&units=imperial&APPID=1faeb28f5befbdab79657bc5ee510ef3";
+      // this query url gets the city name from the other api and generates information from it 
+      $.ajax({
+        url: queryURLWeather,
         method: "GET"
-    })
-        // this gets the location from the IP address from wunderground
+      })
         .then(function (response) {
-            $("#location").html("You are in " + response.location.city);
-            $("#long").html(response.location.lon + " Longitude");
-            $("#lat").html(response.location.lat + " Latitude");
-
-
-            // grabbing the city name and location from the api 
-            // cityName grabs the name of the city from the API for use on the open weather map api 
-            var cityName = response.location.city;
-
-            // open weather map api
-            var queryURLWeather = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName
-                + "&units=imperial&APPID=1faeb28f5befbdab79657bc5ee510ef3";
-            // this query url gets the city name from the other api and generates information from it 
-            $.ajax({
-                url: queryURLWeather,
-                method: "GET"
-            })
-                .then(function (response) {
-                    $("#temperature").html(response.main.temp + " °F");
-                });
-
-            // google maps api
-            // the google maps api also takes the city name from the wunderground api
-            var mapsEmbed = $("<iframe>");
-            mapsEmbed.attr("src", "https://www.google.com/maps/embed/v1/search?key=AIzaSyCF_5x7AkAOH8T7ijrquPSF5Lo3dullSiA&q=" + cityName)
-            mapsEmbed.attr("width", "600");
-            mapsEmbed.attr("height", "750");
-            mapsEmbed.attr("frameborder", "0");
-            mapsEmbed.attr("style", "border:0");
-            $("#map").html(mapsEmbed);
-
+          $("#temperature").html(response.main.temp + " °F");
         });
-});
+
+      // google maps api
+      // the google maps api also takes the city name from the wunderground api
+      var mapsEmbed = $("<iframe>");
+      mapsEmbed.attr("src", "https://www.google.com/maps/embed/v1/search?key=AIzaSyCF_5x7AkAOH8T7ijrquPSF5Lo3dullSiA&q=" + cityName);
+      mapsEmbed.attr("width", "600");
+      mapsEmbed.attr("height", "750");
+      mapsEmbed.attr("frameborder", "0");
+      mapsEmbed.attr("style", "border:0");
+      $("#map").html(mapsEmbed);
+
+    });
+}
