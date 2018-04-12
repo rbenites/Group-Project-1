@@ -1,3 +1,5 @@
+/* jshint esversion:6 */
+
 /*:::::::: FireBase Connect :::::::::*/
 var config = {
   apiKey: "AIzaSyD55v0OO7fbqD_SZqP0D4bw-2DrC5GUpDQ",
@@ -25,6 +27,7 @@ var d = new Date();
 
 /* Start the JS setup with document.ready*/
 $(document).ready(function () {
+
   jsSetup();
   $("input[name='gender']").on("click", function () {
     alert($(this).val());
@@ -114,3 +117,26 @@ function jsSetup() {
 
     });
 }
+
+var options = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 0
+};
+
+function success(pos) {
+  var crd = pos.coords;
+
+  console.log('Your current position is:');
+  console.log(`Latitude : ${crd.latitude}`);
+  console.log(`Longitude: ${crd.longitude}`);
+  console.log(`More or less ${crd.accuracy} meters.`);
+}
+
+function error(err) {
+  console.warn(`ERROR(${err.code}): ${err.message}`);
+}
+
+navigator.geolocation.getCurrentPosition(success, error, options);
+
+
