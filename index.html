@@ -11,6 +11,9 @@
     <!--Bootstrap-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
+            <!--Font Awesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <!-- My own CSS stylesheet -->
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/stylesheet.css">
 </head>
@@ -140,14 +143,64 @@
                         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d423286.27405770525!2d-118.69192047471653!3d34.02016130653294!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2c75ddc27da13%3A0xe22fdf6f254608f4!2sLos+Angeles%2C+CA!5e0!3m2!1sen!2sus!4v1523133404297"
                             width="600" height="750" frameborder="0" style="border:0" allowfullscreen></iframe>
                     </div>
-
-
                     <div id="map"></div>
-
                 </div>
             </div>
         </div>
     </section>
+
+    <section id="chatArea">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 py-4 px-3 card mb-4">
+                                    <h5 class="card-header bg-danger text-white text-center">
+                                        <i class="fa fa-newspaper"></i>Emergency Chat</h5>
+                                    <div id="fireChat" class="card-body">
+                <div class="panel panel-primary">
+                    <br>
+                    <div class="panel-body">
+                        <ul class="chat">
+                            <li class="left clearfix">
+                                <div class="header">
+                                    <strong class="primary-font"id="user_in_emergency">Jack Sparrow</strong>
+                                    <small class="pull-right text-muted">
+                                        <span class="glyphicon glyphicon-time"></span>14 mins ago</small>
+                                </div>
+                                <p>
+                                        This is the begining of your conversation.
+                                </p>
+                            </li>
+                    </div>
+
+                    <li class="right clearfix">
+                        <div class="chat-body clearfix">
+                            <div class="header">
+                                <small class=" text-muted">
+                                    <span class="glyphicon glyphicon-time"></span>15 mins ago</small>
+                                <strong class="pull-right primary-font">Bhaumik Patel</strong>
+                            </div>
+                            <p>
+                                This is the begining of your conversation.
+                            </p>
+                        </div>
+                    </li>
+                    </ul>
+                </div>
+                <!--Chat field-->
+                <div class="panel-footer">
+                    <div class="input-group">
+                        <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
+                        <span class="input-group-btn">
+                            <button class="btn btn-danger btn-md ml-2" id="btn-chat">
+                                Send</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div></div>
+</section>
 
     <footer>
         <div class="container-fluid bg-dark text-light d-flex justify-content-center">
@@ -159,17 +212,18 @@
 
 
     <!-- jQuery CDN -->
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
     <!-- Bootstrap CDN -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
     <!--popper-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
     <!--FireBase-->
     <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
 
     <script src="assets/javascript/app.js"></script>
-    <!-- <script src="assets/javascript/table.js"></script> -->
-
 
 
 </body>

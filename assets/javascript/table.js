@@ -1,5 +1,5 @@
 /*jshint esversion: 6 */
-// console.log("hi");
+console.log("hi");
 var $table = $('#table');
 var $remove = $('#remove');
 var selections = [];
