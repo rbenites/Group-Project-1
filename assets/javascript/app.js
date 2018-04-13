@@ -26,6 +26,7 @@ var loc = '';
 var aller = '';
 var medical = '';
 var d = new Date();
+var dispatchlat = 
 
 /* Start the JS setup with document.ready*/
 $(document).ready(function () {
@@ -44,6 +45,29 @@ $("body").on("click", '.dr', function (e) {
     getFire();
   }
 });
+
+function getDirections() {
+  
+  
+  var lat = '';
+  var lon = '';
+
+  $('#get-directions').on('click', function() {
+
+  // wunderground weather api
+  var queryURLLocation = "http://api.wunderground.com/api/828d2683238be78a/geolookup/q/autoip.json";
+  $.ajax({
+    url: queryURLLocation,
+    method: "GET"
+  }).then(function (response) {
+    lat = response.location.lat;
+    lon = response.location.lon;
+  });
+
+
+
+  });
+}
 
 function weatherAPI() {
   // wunderground weather api
@@ -152,6 +176,26 @@ function getFire() {
 }
 /* This function processes the form and sets the form data in the firebase DB in*/
 function processForm() {
+  var lat = '';
+  var lon = '';
+  var queryURLLocation = "http://api.wunderground.com/api/828d2683238be78a/geolookup/q/autoip.json";
+  $.ajax({
+    url: queryURLLocation,
+    method: "GET"
+  })
+    // this gets the location from the IP address from wunderground
+    .then(function (response) {
+      $("#location").html("You are in " + response.location.city);
+      $("#long").html(response.location.lon + " Longitude");
+      $("#lat").html(response.location.lat + " Latitude");
+      // grabbing the city name and location from the api 
+      // cityName grabs the name of the city from the API for use on the open weather map api 
+      var cityName = response.location.city;
+
+      lat = response.location.lat;
+      lon = response.location.lon;
+    });
+    
   console.log($('#rezQForm'));
   /* Find the form #rezQForm and execute code on submit*/
   $('#rezQForm').submit(function (e) {
@@ -183,11 +227,14 @@ function processForm() {
       loc: loc,
       allergies: aller,
       medical: medical,
+      userLat: lat,
+      userLon: lon
     }, function (errorObject) {
       console.log("The read failed: " + errorObject.code);
     });
   });
 }
+
 
 function results() {
   // I generate the table head in it's own function so I can call it again in other functions. 
