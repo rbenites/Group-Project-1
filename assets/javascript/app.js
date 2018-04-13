@@ -26,7 +26,7 @@ var loc = '';
 var aller = '';
 var medical = '';
 var d = new Date();
-var dispatchlat = 
+var gMapsAPIKey = 'AIzaSyCF_5x7AkAOH8T7ijrquPSF5Lo3dullSiA';
 
 /* Start the JS setup with document.ready*/
 $(document).ready(function () {
@@ -47,24 +47,36 @@ $("body").on("click", '.dr', function (e) {
 });
 
 function getDirections() {
-  
-  
-  var lat = '';
-  var lon = '';
 
-  $('#get-directions').on('click', function() {
+  var userLat = '';
+  var userLon = '';
+  var rezQrlat = '';
+  var rezQrlon = '';
 
-  // wunderground weather api
-  var queryURLLocation = "http://api.wunderground.com/api/828d2683238be78a/geolookup/q/autoip.json";
-  $.ajax({
-    url: queryURLLocation,
-    method: "GET"
-  }).then(function (response) {
-    lat = response.location.lat;
-    lon = response.location.lon;
-  });
+  $('#get-directions').on('click', function () {
+    console.log("get directions has been clicked");
+    // wunderground weather api
+    var queryURLLocation = "http://api.wunderground.com/api/828d2683238be78a/geolookup/q/autoip.json";
+    $.ajax({
+      url: queryURLLocation,
+      method: "GET"
+    }).then(function (response) {
+      rezQrlat = response.location.lat;
+      rezQrlon = response.location.lon;
+    });
 
+    database.ref('/userCases').on("value", function (snapshot) {
+      userLat = snapshot.val().userLat;
+      userLon = snapshot.val().userLon;
+    });
 
+    var dirEmbed = $("<iframe>");
+    dirEmbed.attr("src", "https://www.google.com/maps/embed/v1/directions?key=" + gMapsAPIKey + "&origin=" + rezQrlat + ',' + rezQrlon + "&destination=" + userLat + ',' + userLon);
+    dirEmbed.attr("width", "600");
+    dirEmbed.attr("height", "750");
+    dirEmbed.attr("frameborder", "0");
+    dirEmbed.attr("style", "border:0");
+    $("#get-directions").append(dirEmbed);
 
   });
 }
@@ -195,7 +207,7 @@ function processForm() {
       lat = response.location.lat;
       lon = response.location.lon;
     });
-    
+
   console.log($('#rezQForm'));
   /* Find the form #rezQForm and execute code on submit*/
   $('#rezQForm').submit(function (e) {
@@ -258,5 +270,6 @@ function jsSetup() {
   processForm();
   results();
   getFire();
-  
+  getDirections();
+
 }
