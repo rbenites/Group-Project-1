@@ -96,17 +96,17 @@ function fireChat() {
     var user_in_emergency = $('#inputName').val().trim();
     var text_input = $('#btn-input').val().trim();
     //code for handling the push to firebase
-    database.ref().push({
+    database.ref('/chat').push({
       user_in_emergency: user_in_emergency,
       text_input: text_input,
-      dateAdded: firebase.database.ServerValue.TIMESTAMP
+     // dateAdded: firebase.database.ServerValue.TIMESTAMP
     }, function (errorObject) {
       console.log("The read failed: " + errorObject.code);
     });
     console.log(user_in_emergency);
     console.log(text_input);
   });
-  database.ref().on("child_added", function (childSnapshot) {
+  database.ref('/chat').on("child_added", function (childSnapshot) {
     $("#user_in_emergency").append(childSnapshot.val().user_in_emergency);
     $(".chat").append("<p>" + childSnapshot.val().text_input);
     $("#btn-input").val("");
