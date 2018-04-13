@@ -1,0 +1,226 @@
+.avatar {
+  position : relative;
+  display : inline-block;
+  width : 30px;
+  white-space : nowrap;
+  border-radius : 1000px;
+  vertical-align : bottom;
+}
+
+.avatar span.text-circle {
+  text-align : center;
+  vertical-align : middle;
+  color : #FFFFFF;
+  font-size : 1.2rem;
+  background : #BABFC7;
+  display : table-cell;
+}
+.avatar img {
+  width : 100%;
+  max-width : 100%;
+  height : auto;
+  border : 0 none;
+  border-radius : 1000px;
+}
+
+
+.chat-application{
+  padding : 0 !important;
+}
+.content-wrapper {
+  padding : 0 !important;
+}
+.chat-application {
+  display : block;
+  margin : 10px 0 0 30px;
+  overflow : hidden;
+}
+.time {
+    color: #BABFC7;
+    font-size: 12px;
+    text-align: center;
+    margin: 40px 0;
+}
+.chat-application .content-wrapper {
+  padding : 0 !important;
+}
+
+.chats  {
+  display : block;
+  margin : 10px 0 0 30px;
+  overflow : hidden;
+}
+.chat-body {
+  display : block;
+  margin : 10px 0 0 30px;
+  overflow : hidden;
+}
+/* 
+body{
+  display: none;
+} */
+/* .chats{
+  padding : 0;
+  display : block;
+  margin : 10px 0 0 30px;
+  overflow : hidden;
+  text-align : left;
+  position : relative;
+  display : block;
+  float : left;
+  padding : 8px 15px;
+  margin : 0 0 10px 20px;
+  clear : both;
+  color : #FFFFFF;
+  background-color : #00B5B8;
+  border-radius : 4px;
+
+} */
+.chat-body {
+  display: block;
+  margin: 10px 0 0 30px;
+  overflow: hidden;
+}
+.chat-content {
+  text-align: left;
+  position: relative;
+  display: block;
+  float: left;
+  padding: 8px 15px;
+  margin: 0 0 10px 20px;
+  clear: both;
+  color: #000;
+  background-color: #E6E6FA;
+  border-radius: 4px;
+}
+.chat-content p {
+  margin: 0;
+}
+.chat-content::before {
+  position: absolute;
+  top: 10px;
+  left: -10px;
+  width: 0;
+  height: 0;
+  content: '';
+  border: 5px solid transparent;
+      border-right-color: transparent;
+  border-right-color: #E6E6FA;
+}
+.chat-left{
+  float: right;
+  text-align: right;
+  margin: 0 20px 10px 0;
+  border-color: transparent;
+}
+
+.chat-left .chat-avatar {
+  float: right;
+}
+.chat-left .chat-content::before {
+  left: auto;
+  right: -10px;
+  border-left-color: #D4F0FF;
+  border-right-color: transparent;
+  position: absolute;
+  top: 10px;
+  left: -10px;
+  width: 0;
+  height: 0;
+  content: '';
+  border: 5px solid transparent;
+}
+.chat-left .chat-content {
+  text-align: right;
+  float: right;
+  margin: 0 20px 10px 0;
+  color: #404E67;
+  background-color: #D4F0FF;
+}
+
+.chat-left .chat-content::before {
+  left: auto;
+  right: -10px;
+  border-left-color: #EDEEF0;
+  border-right-color: transparent;
+}
+ 
+.chat {
+  display: block;
+  width: 35%;
+  clear: right;
+}
+/* .chat-left, .chat-content {
+  text-align: right;
+  float: right;
+  margin: 0 20px 10px 0;
+  color: #404E67;
+  background-color: #EDEEF0;
+} */
+
+.chat-avatar {
+  float: left;
+}
+.chat-application, .app-content, .chat-application, .content-right, .chat-application, .content-wrapper, .chat-application .content-body {
+  height : 100%;
+}
+
+.chat-application .content-wrapper {
+  padding : 0 !important;
+}
+
+.chat-application .sidebar-left {
+  border-left : 1px solid #E4E7ED;
+  z-index : 999;
+}
+
+.chat-application .chat-fixed-search {
+  position : fixed;
+  z-index : 999;
+  background : #FFFFFF;
+  width : 300px;
+  border-bottom : 1px solid #E4E7ED;
+}
+
+.chat-application .users-list-padding {
+  padding-top : 83px;
+  padding-bottom : 60px;
+}
+
+.chat-application .chat-app-window {
+  padding : 20px 30px;
+  overflow-y : scroll;
+  text-align : center;
+  height : -webkit-calc(100% - 112px);
+  height :    -moz-calc(100% - 112px);
+  height :         calc(100% - 112px);
+  background-color : #FFFFFF;
+}
+
+.chat-application .chat-app-form {
+  position : relative;
+  padding : 20px 10px;
+  background-color : #EDEEF0;
+  overflow : hidden;
+}
+
+.chat-application.chats {
+  padding : 0;
+}
+.chat-application.chats.chat-body {
+  display : block;
+  margin : 10px 0 0 30px;
+  overflow : hidden;
+}
+.chat-application .chats .chat-body .chat-content {
+  text-align : left;
+  position : relative;
+  display : block;
+  float : left;
+  padding : 8px 15px;
+  margin : 0 0 10px 20px;
+  clear : both;
+  color : #FFFFFF;
+  background-color : #E6E6FA;
+  border-radius : 4px;
+}
