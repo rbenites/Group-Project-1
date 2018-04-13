@@ -63,27 +63,26 @@ function getDirections() {
     }).then(function (response) {
       rezQrlat = response.location.lat;
       rezQrlon = response.location.lon;
+
+      database.ref('/userCases').on("child_added", function (snapshot) {
+        userLat = snapshot.val().userLat;
+        userLon = snapshot.val().userLon;
+      });
+
+      var dirEmbed = $("<iframe>");
+      dirEmbed.attr("src", "https://www.google.com/maps/embed/v1/directions?key=" + gMapsAPIKey + "&origin=" + rezQrlat + ',' + rezQrlon + "&destination=" + userLat + ',' + userLon);
+      dirEmbed.attr("width", "50%");
+      dirEmbed.attr("height", "450");
+      dirEmbed.attr("frameborder", "0");
+      dirEmbed.attr("style", "border:0");
+      dirEmbed.addClass("mt-4");
+      $("#get-directions").html(dirEmbed);
+
+      console.log("Rescuer lat: " + rezQrlat);
+      console.log("Rescuer lon: " + rezQrlon);
+      console.log("User lat: " + userLat);
+      console.log("User lon: " + userLon);
     });
-
-    database.ref('/userCases').on("value", function (snapshot) {
-      userLat = snapshot.val().userLat;
-      userLon = snapshot.val().userLon;
-    });
-
-    var dirEmbed = $("<iframe>");
-    dirEmbed.attr("src", "https://www.google.com/maps/embed/v1/directions?key=" + gMapsAPIKey + "&origin=" + rezQrlat + ',' + rezQrlon + "&destination=" + userLat + ',' + userLon);
-    dirEmbed.attr("width", "100%");
-    dirEmbed.attr("height", "350");
-    dirEmbed.attr("frameborder", "0");
-    dirEmbed.attr("style", "border:0");
-    dirEmbed.addClass("mt-4");
-    $("#get-directions").html(dirEmbed);
-
-    console.log("Rescuer lat: " + rezQrlat);
-    console.log("Rescuer lon: " + rezQrlon);
-    console.log("User lat: " + userLat);
-    console.log("User laon: " + userLon);
-
   });
 }
 
@@ -192,12 +191,12 @@ function getFire() {
     }
   });
 }
-$("#link").on("click", function (){
-// function changeEmergency (){
-//   getFire();
+$("#link").on("click", function () {
+  // function changeEmergency (){
+  //   getFire();
 
-    console.log("button clicked");
-  })
+  console.log("button clicked");
+});
 // }
 /* This function processes the form and sets the form data in the firebase DB in*/
 function processForm() {
