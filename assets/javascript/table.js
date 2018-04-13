@@ -73,13 +73,13 @@ function initTable() {
     $table.bootstrapTable('resetView');
   }, 200);
   $table.on('check.bs.table uncheck.bs.table ' +
-            'check-all.bs.table uncheck-all.bs.table', () => {
-    $remove.prop('disabled', !$table.bootstrapTable('getSelections').length);
+    'check-all.bs.table uncheck-all.bs.table', () => {
+      $remove.prop('disabled', !$table.bootstrapTable('getSelections').length);
 
-    // save your data, here just save the current page
-    selections = getIdSelections();
-    // push or splice the selections if you want to save all data selections
-  });
+      // save your data, here just save the current page
+      selections = getIdSelections();
+      // push or splice the selections if you want to save all data selections
+    });
   $table.on('expand-row.bs.table', (e, index, row, $detail) => {
     if (index % 2 == 1) {
       $detail.html('Loading from ajax request...');
@@ -109,7 +109,7 @@ function initTable() {
 
 
 function getIdSelections() {
-  return $.map($table.bootstrapTable('getSelections'), ({id}) => id);
+  return $.map($table.bootstrapTable('getSelections'), ({ id }) => id);
 }
 
 function responseHandler(res) {
@@ -142,7 +142,7 @@ window.operateEvents = {
   'click .like': function (e, value, row, index) {
     alert(`You click like action, row: ${JSON.stringify(row)}`);
   },
-  'click .remove': function(e, value, {id}, index) {
+  'click .remove': function (e, value, { id }, index) {
     $table.bootstrapTable('remove', {
       field: 'id',
       values: [id]
@@ -152,7 +152,7 @@ window.operateEvents = {
 
 function totalPriceFormatter(data) {
   let total = 0;
-  $.each(data, (i, {price}) => {
+  $.each(data, (i, { price }) => {
     total += +(price.substring(1));
   });
   return `$${total}`;
@@ -163,5 +163,5 @@ function getHeight() {
 }
 
 $(() => {
-	initTable();
+  initTable();
 });

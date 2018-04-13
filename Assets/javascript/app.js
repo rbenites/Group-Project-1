@@ -49,9 +49,9 @@ function weatherAPI() {
   // wunderground weather api
   var queryURLLocation = "http://api.wunderground.com/api/828d2683238be78a/geolookup/q/autoip.json";
   $.ajax({
-      url: queryURLLocation,
-      method: "GET"
-    })
+    url: queryURLLocation,
+    method: "GET"
+  })
     // this gets the location from the IP address from wunderground
     .then(function (response) {
       $("#location").html("You are in " + response.location.city);
@@ -65,9 +65,9 @@ function weatherAPI() {
       var queryURLWeather = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&units=imperial&APPID=1faeb28f5befbdab79657bc5ee510ef3";
       // this query url gets the city name from the other api and generates information from it 
       $.ajax({
-          url: queryURLWeather,
-          method: "GET"
-        })
+        url: queryURLWeather,
+        method: "GET"
+      })
         .then(function (response) {
           $("#temperature").html(response.main.temp + " °F");
         });
