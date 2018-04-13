@@ -53,7 +53,7 @@ function getDirections() {
   var rezQrlat = '';
   var rezQrlon = '';
 
-  $('#get-directions').on('click', function () {
+  $('#directions-btn').on('click', function () {
     console.log("get directions has been clicked");
     // wunderground weather api
     var queryURLLocation = "http://api.wunderground.com/api/828d2683238be78a/geolookup/q/autoip.json";
@@ -72,11 +72,17 @@ function getDirections() {
 
     var dirEmbed = $("<iframe>");
     dirEmbed.attr("src", "https://www.google.com/maps/embed/v1/directions?key=" + gMapsAPIKey + "&origin=" + rezQrlat + ',' + rezQrlon + "&destination=" + userLat + ',' + userLon);
-    dirEmbed.attr("width", "600");
-    dirEmbed.attr("height", "750");
+    dirEmbed.attr("width", "100%");
+    dirEmbed.attr("height", "350");
     dirEmbed.attr("frameborder", "0");
     dirEmbed.attr("style", "border:0");
-    $("#get-directions").append(dirEmbed);
+    dirEmbed.addClass("mt-4");
+    $("#get-directions").html(dirEmbed);
+
+    console.log("Rescuer lat: " + rezQrlat);
+    console.log("Rescuer lon: " + rezQrlon);
+    console.log("User lat: " + userLat);
+    console.log("User laon: " + userLon);
 
   });
 }
