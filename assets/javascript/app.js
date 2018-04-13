@@ -133,7 +133,7 @@ function getFire() {
       // Table generation is here
       var fireData = "";
       fireData += "<tr class='dataRW' id='tr" + x + "'>";
-      fireData += "<td>" + x + "</td>";
+      fireData += "<td class='btn btn-link'>" + x + "</td>";
       fireData += "<td>" + csDta[k].date + "</td>";
       fireData += "<td>" + csDta[k].person + "</td>";
       fireData += "<td>" + csDta[k].gender + "</td>";
@@ -150,6 +150,13 @@ function getFire() {
     }
   });
 }
+$("#link").on("click", function (){
+// function changeEmergency (){
+//   getFire();
+
+    console.log("button clicked");
+  })
+// }
 /* This function processes the form and sets the form data in the firebase DB in*/
 function processForm() {
   console.log($('#rezQForm'));
