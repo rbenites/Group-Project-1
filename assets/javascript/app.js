@@ -30,7 +30,14 @@ var gMapsAPIKey = 'AIzaSyCF_5x7AkAOH8T7ijrquPSF5Lo3dullSiA';
 
 /* Start the JS setup with document.ready*/
 $(document).ready(function () {
+  var testLat;
+  var testLon;
   jsSetup();
+
+  $("#report-submit").on("click", function () {
+    console.log(testLat);
+    console.log(testLon);
+  });
 });
 
 $("body").on("click", '.dr', function (e) {
@@ -86,9 +93,9 @@ function getDirections() {
   });
 }
 
-var testLat;
-var testLon;
-$(document).ready(function () {
+
+function getLoc() {
+
   var startPos;
   // var nudge = document.getElementById("nudge");
 
@@ -109,8 +116,10 @@ $(document).ready(function () {
 
     // Do magic with location
     startPos = position;
-    var testLat = startPos.coords.latitude;
-    var testLon = startPos.coords.longitude;
+    testLat = startPos.coords.latitude;
+    testLon = startPos.coords.longitude;
+    console.log(startPos.coords.latitude);
+    console.log(startPos.coords.longitude);
 
   };
   var geoError = function (error) {
@@ -122,14 +131,7 @@ $(document).ready(function () {
     }
   };
   navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
-});
-
-$("#report-submit").on("click", function() {
-  console.log(testLat);
-  console.log(testLon);
-});
-
-
+}
 
 function weatherAPI() {
   // wunderground weather api
@@ -328,5 +330,5 @@ function jsSetup() {
   results();
   getFire();
   getDirections();
-
+  getLoc();
 }
