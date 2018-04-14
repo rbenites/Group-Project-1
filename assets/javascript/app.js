@@ -13,7 +13,7 @@ database = firebase.database();
 /*:::::::: GLOBAL VARIABLES :::::::::*/
 var appId = "C467D171-6024-43EC-9943-FE2E0478AFBD";
 var apiToken = "623cd37c96fc7faf33dd41b5e68894169d567d91";
-var tHeadItems = ["Patient ID", "Date", "Who Needs Help", "Gender", "Name", "Age", "Number", "LOC", "Allergies", "Medical History", "Actions"];
+var tHeadItems = ["Patient ID", "Date", "Who Needs Help", "Gender", "Name", "Age", "Number", "LOC", "Allergies", "Medical History","Chief Complaint", "Actions"];
 var thead = $("#thead");
 var tableResults = $("#tableResults");
 var icon = '<i class="fa fa-trash-o text-white"></i>';
@@ -25,6 +25,7 @@ var gender = '';
 var loc = '';
 var aller = '';
 var medical = '';
+var complaint = '';
 var d = new Date();
 var gMapsAPIKey = 'AIzaSyCF_5x7AkAOH8T7ijrquPSF5Lo3dullSiA';
 
@@ -184,6 +185,8 @@ function getFire() {
       fireData += "<td>" + csDta[k].loc + "</td>";
       fireData += "<td>" + csDta[k].allergies + "</td>";
       fireData += "<td>" + csDta[k].medical + "</td>";
+      fireData += "<td>" + csDta[k].complaint + "</td>";
+
       fireData += "<td><button class='btn dr bg-danger' data-key='" + k + "'>" + icon + "</button></td>";
       fireData += "</tr>";
 
@@ -239,6 +242,7 @@ function processForm() {
     loc = $("#loc").val().trim();
     aller = $("#allergies").val().trim();
     medical = $("#mdclCond").val().trim();
+    complaint = $("#inputComplaint").val().trim();
 
     /* This code pushes the form info to Firebase DB*/
     database.ref('/userCases').push({
@@ -251,6 +255,7 @@ function processForm() {
       loc: loc,
       allergies: aller,
       medical: medical,
+      complaint: complaint,
       userLat: lat,
       userLon: lon
     }, function (errorObject) {
