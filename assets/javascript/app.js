@@ -288,9 +288,116 @@ function processForm() {
     }, function (errorObject) {
       console.log("The read failed: " + errorObject.code);
     });
-  });
-}
+    var dynSt =  $('#dynSt');
+    dynSt.html(' ');
+    var alert = $('<div>');
+    alert.addClass('alert alert-success');
+    alert.attr('role','alert');
+    console.log(alert);
+    alert.text('You message has been sent. A chat will open up shortly');
+    dynSt.append(alert);
+     setTimeout(() => {
+      dynSt.html(' ');
+    setChat();
+      // 	chatIamge.attr('src', 'img/chat_2.png');
+    }, 5000);
+   
 
+  });
+ 
+}
+function setChat(){
+  // THIS IS HORRIBLE I KNOW BUT IT IS FOR DEV PURPOSES SO WE CAN ISOLATE THE CHAT AND HAVE THE PROCESS FUNCTIONALITY WORK
+ var setChat = '<div class="col-12 py-4 px-3 card mb-4">' +
+ ' <h5 class="card-header emrGnC text-white text-center">' +
+ '<i class="fa fa-heartbeat"></i>&nbsp;Emergency Chat</h5> ' +
+'<div id="fireChat" class="card-body"> ' +
+ '<div class="content-right"> ' +
+    ' <div class="content-wrapper"> ' +
+         '<div class="content-header row"> ' +
+        '</div> ' +
+        '<div class="content-body"> ' +
+        '    <section class="chat-app-window"> ' +
+        '        <div class="chats"> ' +
+        '            <div class="chats"> ' +
+        '                <!-- start  of chat for user ermGnc --> ' +
+        '                <div class="chat"> ' +
+        '                    <div class="chat-avatar user_in_emergency"> ' +
+        '                        <a class="avatar" data-toggle="tooltip" href="#" data-placement="right" title="" data-original-title=""> ' +
+        '                            <img src="assets/img/avatar-s-1.png" alt="avatar">  ' +
+        '                        </a> ' +
+        '                    </div>  ' +
+        '                    <div class="chat-body"> ' +
+        '                        <div class="chat-content user_chat_content"> ' +
+        '                            <p>How can we help? Were here for you!</p>  ' +
+        '                        </div> ' +
+        '                    </div> ' +
+        '                </div> ' +
+        '                <p class="time">1 hours ago</p> ' +
+        '                <!-- start of chat user EMT --> ' +
+        '                <div class="chat chat-left"> ' +
+        '                    <div class="chat-avatar emt_name"> ' +
+        '                        <a class="avatar" data-toggle="tooltip" href="#" data-placement="left" title="" data-original-title=""> ' +
+        '                            <img src="assets/img/avatar-s-7.png" alt="avatar"> ' +
+        '                        </a> ' +
+        '                    </div> ' +
+        '                    <div class="chat-body"> ' +
+        '                         <div class="chat-content emt_chat_content"> ' +
+        '                            <p>Hey John, I am looking for the best admin template.</p> ' +
+        '                            <p>Could you please help me to find it out?</p> ' +
+        '                        </div> ' +
+        '                        <div class="chat-content emt_chat_content"> ' +
+        '                            <p>It should be Bootstrap 4 compatible.</p> ' +
+        '                        </div> ' +
+        '                    </div> ' +
+        '                </div> ' +
+        '                <!-- chat for user ermGnc--> ' +
+        '                <div class="chat"> ' +
+        '                    <div class="chat-avatar user_in_emergency"> ' +
+        '                        <a class="avatar" data-toggle="tooltip" href="#" data-placement="right" title="" data-original-title=""> ' +
+        '                            <img src="assets/img/avatar-s-1.png" alt="avatar"> ' +
+        '                        </a> ' +
+        '                    </div> ' +
+        '                    <div class="chat-body"> ' +
+        '                        <div class="chat-content user_chat_content"> ' +
+        '                            <p>Absolutely!</p> ' +
+        '                        </div> ' +
+        '                        <div class="chat-content user_chat_content"> ' +
+        '                            <p>Stack admin is the responsive bootstrap 4 admin template.</p> ' +
+        '                        </div> ' +
+        '                    </div> ' +
+        '                </div> ' +
+        '                <p class="time">1 hours ago</p> ' +
+        '                    </div> ' +
+        '                    </div> ' +
+        '                    </div> ' +
+        '                  </section> ' +
+'<section class="chat-app-form">' +
+'   <form class="chat-app-input d-flex">' +
+'       <fieldset class="form-group position-relative has-icon-left col-10 m-0">' +
+'           <div class="form-control-position">' +
+'               <i class="icon-emoticon-smile"></i>' +
+                '                    </div> ' +
+                '           <input class="form-control emt_chat" id="iconLeft4" placeholder="Type your message" type="text">' +
+                '  <div class="form-control-position control-position-right">' +
+                ' <i class="ft-image"></i>' +
+                '                    </div> ' +
+                ' </fieldset>' +
+                ' <fieldset class="form-group position-relative has-icon-left col-2 m-0">' +
+                ' <button type="button" class="btn btn-primary emt_send">' +
+                ' <i class="fa fa-paper-plane-o d-lg-none"></i>' +
+                ' <span id="emt_send" class="d-none d-lg-block">Send</span>' +
+                ' </button>' +
+                '</fieldset>' +
+                '</form>' +
+    '                  </section> ' +
+'                    </div> ' +
+  '                    </div> ' +
+  '                    </div> ' ;
+console.log(setChat);
+$('#dynSt').html(' ');
+$('#dynSt').html(setChat);
+}   
 
 function results() {
   // I generate the table head in it's own function so I can call it again in other functions. 
