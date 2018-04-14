@@ -1,3 +1,5 @@
+/* jshint esversion: 6 */
+
 /*:::::::: FireBase Connect :::::::::*/
 var config = {
   apiKey: "AIzaSyD55v0OO7fbqD_SZqP0D4bw-2DrC5GUpDQ",
@@ -13,7 +15,7 @@ database = firebase.database();
 /*:::::::: GLOBAL VARIABLES :::::::::*/
 var appId = "C467D171-6024-43EC-9943-FE2E0478AFBD";
 var apiToken = "623cd37c96fc7faf33dd41b5e68894169d567d91";
-var tHeadItems = ["Patient ID", "Date", "Who Needs Help", "Gender", "Name", "Age", "Number", "LOC", "Allergies", "Medical History", "Actions"];
+var tHeadItems = ["Patient ID", "Date", "Who Needs Help", "Gender", "Name", "Age", "Number", "LOC", "Allergies", "Medical History","Chief Complaint", "Actions"];
 var thead = $("#thead");
 var tableResults = $("#tableResults");
 var icon = '<i class="fa fa-trash-o text-white"></i>';
@@ -25,6 +27,7 @@ var gender = '';
 var loc = '';
 var aller = '';
 var medical = '';
+var complaint = '';
 var d = new Date();
 var gMapsAPIKey = 'AIzaSyCF_5x7AkAOH8T7ijrquPSF5Lo3dullSiA';
 
@@ -172,32 +175,60 @@ function weatherAPI() {
     });
 }
 
-function fireChat() {
-  //Chat Code
-  //variables
+function user_fireChat() {
   var user_in_emergency = "";
   var text_input = "";
-  //onbuttonclick to send user name and text message
-  $("#btn-chat").on("click", function (event) {
+  //on button click to send user name and text message
+  $(".user_send").on("click", function (event) {
     event.preventDefault();
 
+    //get the date in the field
     var user_in_emergency = $('#inputName').val().trim();
-    var text_input = $('#btn-input').val().trim();
+    var text_input = $('.user_chat').val().trim();
     //code for handling the push to firebase
-    database.ref().push({
+    database.ref('/chatResqe').push({
       user_in_emergency: user_in_emergency,
       text_input: text_input,
-      dateAdded: firebase.database.ServerValue.TIMESTAMP
+      //dateAdded: firebase.database.ServerValue.TIMESTAMP
     }, function (errorObject) {
       console.log("The read failed: " + errorObject.code);
     });
     console.log(user_in_emergency);
     console.log(text_input);
   });
-  database.ref().on("child_added", function (childSnapshot) {
-    $("#user_in_emergency").append(childSnapshot.val().user_in_emergency);
-    $(".chat").append("<p>" + childSnapshot.val().text_input);
-    $("#btn-input").val("");
+  database.ref('/chatResqe').on("child_added", function (childSnapshot) {
+    $(".user_in_emergency").append(childSnapshot.val().user_in_emergency);
+    $(".user_chat_content").append("<p>" + childSnapshot.val().text_input);
+    $(".user_chat").val("");
+  }, function (errorObject) {
+    console.log("The read failed: " + errorObject.code);
+  });
+}
+
+function emt_fireChat() {
+  var emt_name = "EMT";
+  var text_input = "";
+  //on button click to send user name and text message
+  $(".emt_send").on("click", function (event) {
+    event.preventDefault();
+
+    //get the date in the field
+    var text_input = $('.emt_chat').val().trim();
+    //code for handling the push to firebase
+    database.ref('/chatResqr').push({
+      emt_name: emt_name,
+      text_input: text_input,
+      //dateAdded: firebase.database.ServerValue.TIMESTAMP
+    }, function (errorObject) {
+      console.log("The read failed: " + errorObject.code);
+    });
+    //console.log(user_in_emergency);
+    console.log(text_input);
+  });
+  database.ref('/chatResqr').on("child_added", function (childSnapshot) {
+    $(".emt_name").append(childSnapshot.val().emt_name);
+    $(".emt_chat_content").append("<p>" + childSnapshot.val().text_input);
+    $(".emt_chat").val("");
   }, function (errorObject) {
     console.log("The read failed: " + errorObject.code);
   });
@@ -231,6 +262,7 @@ function getFire() {
       fireData += "<td>" + csDta[k].loc + "</td>";
       fireData += "<td>" + csDta[k].allergies + "</td>";
       fireData += "<td>" + csDta[k].medical + "</td>";
+      fireData += "<td>" + csDta[k].complaint + "</td>";
       fireData += "<td><button class='btn dr bg-danger' data-key='" + k + "'>" + icon + "</button></td>";
       fireData += "</tr>";
 
@@ -286,6 +318,7 @@ function processForm() {
     loc = $("#loc").val().trim();
     aller = $("#allergies").val().trim();
     medical = $("#mdclCond").val().trim();
+    complaint = $("#inputComplaint").val().trim();
 
     /* This code pushes the form info to Firebase DB*/
     database.ref('/userCases').push({
@@ -298,14 +331,122 @@ function processForm() {
       loc: loc,
       allergies: aller,
       medical: medical,
+      complaint: complaint,
       userLat: lat,
       userLon: lon
     }, function (errorObject) {
       console.log("The read failed: " + errorObject.code);
     });
-  });
-}
+    var dynSt =  $('#dynSt');
+    dynSt.html(' ');
+    var alert = $('<div>');
+    alert.addClass('alert alert-success');
+    alert.attr('role','alert');
+    console.log(alert);
+    alert.text('You message has been sent. A chat will open up shortly');
+    dynSt.append(alert);
+     setTimeout(() => {
+      dynSt.html(' ');
+    setChat();
+      // 	chatIamge.attr('src', 'img/chat_2.png');
+    }, 5000);
+   
 
+  });
+ 
+}
+function setChat(){
+  // THIS IS HORRIBLE I KNOW BUT IT IS FOR DEV PURPOSES SO WE CAN ISOLATE THE CHAT AND HAVE THE PROCESS FUNCTIONALITY WORK
+ var setChat = '<div class="col-12 py-4 px-3 card mb-4">' +
+ ' <h5 class="card-header emrGnC text-white text-center">' +
+ '<i class="fa fa-heartbeat"></i>&nbsp;Emergency Chat</h5> ' +
+'<div id="fireChat" class="card-body"> ' +
+ '<div class="content-right"> ' +
+    ' <div class="content-wrapper"> ' +
+         '<div class="content-header row"> ' +
+        '</div> ' +
+        '<div class="content-body"> ' +
+        '    <section class="chat-app-window"> ' +
+        '        <div class="chats"> ' +
+        '            <div class="chats"> ' +
+        '                <!-- start  of chat for user ermGnc --> ' +
+        '                <div class="chat"> ' +
+        '                    <div class="chat-avatar user_in_emergency"> ' +
+        '                        <a class="avatar" data-toggle="tooltip" href="#" data-placement="right" title="" data-original-title=""> ' +
+        '                            <img src="assets/img/avatar-s-1.png" alt="avatar">  ' +
+        '                        </a> ' +
+        '                    </div>  ' +
+        '                    <div class="chat-body"> ' +
+        '                        <div class="chat-content user_chat_content"> ' +
+        '                            <p>How can we help? Were here for you!</p>  ' +
+        '                        </div> ' +
+        '                    </div> ' +
+        '                </div> ' +
+        '                <p class="time">1 hours ago</p> ' +
+        '                <!-- start of chat user EMT --> ' +
+        '                <div class="chat chat-left"> ' +
+        '                    <div class="chat-avatar emt_name"> ' +
+        '                        <a class="avatar" data-toggle="tooltip" href="#" data-placement="left" title="" data-original-title=""> ' +
+        '                            <img src="assets/img/avatar-s-7.png" alt="avatar"> ' +
+        '                        </a> ' +
+        '                    </div> ' +
+        '                    <div class="chat-body"> ' +
+        '                         <div class="chat-content emt_chat_content"> ' +
+        '                            <p>Hey John, I am looking for the best admin template.</p> ' +
+        '                            <p>Could you please help me to find it out?</p> ' +
+        '                        </div> ' +
+        '                        <div class="chat-content emt_chat_content"> ' +
+        '                            <p>It should be Bootstrap 4 compatible.</p> ' +
+        '                        </div> ' +
+        '                    </div> ' +
+        '                </div> ' +
+        '                <!-- chat for user ermGnc--> ' +
+        '                <div class="chat"> ' +
+        '                    <div class="chat-avatar user_in_emergency"> ' +
+        '                        <a class="avatar" data-toggle="tooltip" href="#" data-placement="right" title="" data-original-title=""> ' +
+        '                            <img src="assets/img/avatar-s-1.png" alt="avatar"> ' +
+        '                        </a> ' +
+        '                    </div> ' +
+        '                    <div class="chat-body"> ' +
+        '                        <div class="chat-content user_chat_content"> ' +
+        '                            <p>Absolutely!</p> ' +
+        '                        </div> ' +
+        '                        <div class="chat-content user_chat_content"> ' +
+        '                            <p>Stack admin is the responsive bootstrap 4 admin template.</p> ' +
+        '                        </div> ' +
+        '                    </div> ' +
+        '                </div> ' +
+        '                <p class="time">1 hours ago</p> ' +
+        '                    </div> ' +
+        '                    </div> ' +
+        '                    </div> ' +
+        '                  </section> ' +
+'<section class="chat-app-form">' +
+'   <form class="chat-app-input d-flex">' +
+'       <fieldset class="form-group position-relative has-icon-left col-10 m-0">' +
+'           <div class="form-control-position">' +
+'               <i class="icon-emoticon-smile"></i>' +
+                '                    </div> ' +
+                '           <input class="form-control emt_chat" id="iconLeft4" placeholder="Type your message" type="text">' +
+                '  <div class="form-control-position control-position-right">' +
+                ' <i class="ft-image"></i>' +
+                '                    </div> ' +
+                ' </fieldset>' +
+                ' <fieldset class="form-group position-relative has-icon-left col-2 m-0">' +
+                ' <button type="button" class="btn btn-primary emt_send">' +
+                ' <i class="fa fa-paper-plane-o d-lg-none"></i>' +
+                ' <span id="emt_send" class="d-none d-lg-block">Send</span>' +
+                ' </button>' +
+                '</fieldset>' +
+                '</form>' +
+    '                  </section> ' +
+'                    </div> ' +
+  '                    </div> ' +
+  '                    </div> ' ;
+console.log(setChat);
+$('#dynSt').html(' ');
+$('#dynSt').html(setChat);
+}   
 
 function results() {
   // I generate the table head in it's own function so I can call it again in other functions. 
@@ -325,7 +466,8 @@ function results() {
 /* I use this function to call the JS of my app */
 function jsSetup() {
   weatherAPI();
-  fireChat();
+  user_fireChat();
+  emt_fireChat();
   processForm();
   results();
   getFire();
