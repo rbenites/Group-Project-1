@@ -13,7 +13,7 @@ database = firebase.database();
 /*:::::::: GLOBAL VARIABLES :::::::::*/
 var appId = "C467D171-6024-43EC-9943-FE2E0478AFBD";
 var apiToken = "623cd37c96fc7faf33dd41b5e68894169d567d91";
-var tHeadItems = ["Patient ID", "Date", "Who Needs Help", "Gender", "Name", "Age", "Number", "LOC", "Allergies", "Medical History", "Actions"];
+var tHeadItems = ["Patient ID", "Date", "Who Needs Help", "Gender", "Name", "Age", "Number", "LOC", "Allergies", "Medical History","Chief Complaint", "Actions"];
 var thead = $("#thead");
 var tableResults = $("#tableResults");
 var icon = '<i class="fa fa-trash-o text-white"></i>';
@@ -25,6 +25,7 @@ var gender = '';
 var loc = '';
 var aller = '';
 var medical = '';
+var complaint = '';
 var d = new Date();
 var gMapsAPIKey = 'AIzaSyCF_5x7AkAOH8T7ijrquPSF5Lo3dullSiA';
 
@@ -125,32 +126,60 @@ function weatherAPI() {
     });
 }
 
-function fireChat() {
-  //Chat Code
-  //variables
+function user_fireChat() {
   var user_in_emergency = "";
   var text_input = "";
-  //onbuttonclick to send user name and text message
-  $("#btn-chat").on("click", function (event) {
+  //on button click to send user name and text message
+  $(".user_send").on("click", function (event) {
     event.preventDefault();
 
+    //get the date in the field
     var user_in_emergency = $('#inputName').val().trim();
-    var text_input = $('#btn-input').val().trim();
+    var text_input = $('.user_chat').val().trim();
     //code for handling the push to firebase
-    database.ref().push({
+    database.ref('/chatResqe').push({
       user_in_emergency: user_in_emergency,
       text_input: text_input,
-      dateAdded: firebase.database.ServerValue.TIMESTAMP
+      //dateAdded: firebase.database.ServerValue.TIMESTAMP
     }, function (errorObject) {
       console.log("The read failed: " + errorObject.code);
     });
     console.log(user_in_emergency);
     console.log(text_input);
   });
-  database.ref().on("child_added", function (childSnapshot) {
-    $("#user_in_emergency").append(childSnapshot.val().user_in_emergency);
-    $(".chat").append("<p>" + childSnapshot.val().text_input);
-    $("#btn-input").val("");
+  database.ref('/chatResqe').on("child_added", function (childSnapshot) {
+    $(".user_in_emergency").append(childSnapshot.val().user_in_emergency);
+    $(".user_chat_content").append("<p>" + childSnapshot.val().text_input);
+    $(".user_chat").val("");
+  }, function (errorObject) {
+    console.log("The read failed: " + errorObject.code);
+  });
+}
+
+function emt_fireChat() {
+  var emt_name = "EMT";
+  var text_input = "";
+  //on button click to send user name and text message
+  $(".emt_send").on("click", function (event) {
+    event.preventDefault();
+
+    //get the date in the field
+    var text_input = $('.emt_chat').val().trim();
+    //code for handling the push to firebase
+    database.ref('/chatResqr').push({
+      emt_name: emt_name,
+      text_input: text_input,
+      //dateAdded: firebase.database.ServerValue.TIMESTAMP
+    }, function (errorObject) {
+      console.log("The read failed: " + errorObject.code);
+    });
+    //console.log(user_in_emergency);
+    console.log(text_input);
+  });
+  database.ref('/chatResqr').on("child_added", function (childSnapshot) {
+    $(".emt_name").append(childSnapshot.val().emt_name);
+    $(".emt_chat_content").append("<p>" + childSnapshot.val().text_input);
+    $(".emt_chat").val("");
   }, function (errorObject) {
     console.log("The read failed: " + errorObject.code);
   });
@@ -184,6 +213,7 @@ function getFire() {
       fireData += "<td>" + csDta[k].loc + "</td>";
       fireData += "<td>" + csDta[k].allergies + "</td>";
       fireData += "<td>" + csDta[k].medical + "</td>";
+      fireData += "<td>" + csDta[k].complaint + "</td>";
       fireData += "<td><button class='btn dr bg-danger' data-key='" + k + "'>" + icon + "</button></td>";
       fireData += "</tr>";
 
@@ -239,6 +269,7 @@ function processForm() {
     loc = $("#loc").val().trim();
     aller = $("#allergies").val().trim();
     medical = $("#mdclCond").val().trim();
+    complaint = $("#inputComplaint").val().trim();
 
     /* This code pushes the form info to Firebase DB*/
     database.ref('/userCases').push({
@@ -251,6 +282,7 @@ function processForm() {
       loc: loc,
       allergies: aller,
       medical: medical,
+      complaint: complaint,
       userLat: lat,
       userLon: lon
     }, function (errorObject) {
@@ -278,7 +310,8 @@ function results() {
 /* I use this function to call the JS of my app */
 function jsSetup() {
   weatherAPI();
-  fireChat();
+  user_fireChat();
+  emt_fireChat();
   processForm();
   results();
   getFire();
