@@ -26,6 +26,7 @@ var loc = '';
 var aller = '';
 var medical = '';
 var d = new Date();
+var gMapsAPIKey = 'AIzaSyCF_5x7AkAOH8T7ijrquPSF5Lo3dullSiA';
 
 /* Start the JS setup with document.ready*/
 $(document).ready(function () {
@@ -44,6 +45,46 @@ $("body").on("click", '.dr', function (e) {
     getFire();
   }
 });
+
+function getDirections() {
+
+  var userLat = '';
+  var userLon = '';
+  var rezQrlat = '';
+  var rezQrlon = '';
+
+  $('#directions-btn').on('click', function () {
+    console.log("get directions has been clicked");
+    // wunderground weather api
+    var queryURLLocation = "http://api.wunderground.com/api/828d2683238be78a/geolookup/q/autoip.json";
+    $.ajax({
+      url: queryURLLocation,
+      method: "GET"
+    }).then(function (response) {
+      rezQrlat = response.location.lat;
+      rezQrlon = response.location.lon;
+
+      database.ref('/userCases').on("child_added", function (snapshot) {
+        userLat = snapshot.val().userLat;
+        userLon = snapshot.val().userLon;
+      });
+
+      var dirEmbed = $("<iframe>");
+      dirEmbed.attr("src", "https://www.google.com/maps/embed/v1/directions?key=" + gMapsAPIKey + "&origin=" + rezQrlat + ',' + rezQrlon + "&destination=" + userLat + ',' + userLon);
+      dirEmbed.attr("width", "50%");
+      dirEmbed.attr("height", "450");
+      dirEmbed.attr("frameborder", "0");
+      dirEmbed.attr("style", "border:0");
+      dirEmbed.addClass("mt-4");
+      $("#get-directions").html(dirEmbed);
+
+      console.log("Rescuer lat: " + rezQrlat);
+      console.log("Rescuer lon: " + rezQrlon);
+      console.log("User lat: " + userLat);
+      console.log("User lon: " + userLon);
+    });
+  });
+}
 
 function weatherAPI() {
   // wunderground weather api
@@ -133,7 +174,7 @@ function getFire() {
       // Table generation is here
       var fireData = "";
       fireData += "<tr class='dataRW' id='tr" + x + "'>";
-      fireData += "<td>" + x + "</td>";
+      fireData += "<td class='btn btn-link'>" + x + "</td>";
       fireData += "<td>" + csDta[k].date + "</td>";
       fireData += "<td>" + csDta[k].person + "</td>";
       fireData += "<td>" + csDta[k].gender + "</td>";
@@ -150,8 +191,35 @@ function getFire() {
     }
   });
 }
+$("#link").on("click", function () {
+  // function changeEmergency (){
+  //   getFire();
+
+  console.log("button clicked");
+});
+// }
 /* This function processes the form and sets the form data in the firebase DB in*/
 function processForm() {
+  var lat = '';
+  var lon = '';
+  var queryURLLocation = "http://api.wunderground.com/api/828d2683238be78a/geolookup/q/autoip.json";
+  $.ajax({
+    url: queryURLLocation,
+    method: "GET"
+  })
+    // this gets the location from the IP address from wunderground
+    .then(function (response) {
+      $("#location").html("You are in " + response.location.city);
+      $("#long").html(response.location.lon + " Longitude");
+      $("#lat").html(response.location.lat + " Latitude");
+      // grabbing the city name and location from the api 
+      // cityName grabs the name of the city from the API for use on the open weather map api 
+      var cityName = response.location.city;
+
+      lat = response.location.lat;
+      lon = response.location.lon;
+    });
+
   console.log($('#rezQForm'));
   /* Find the form #rezQForm and execute code on submit*/
   $('#rezQForm').submit(function (e) {
@@ -183,11 +251,14 @@ function processForm() {
       loc: loc,
       allergies: aller,
       medical: medical,
+      userLat: lat,
+      userLon: lon
     }, function (errorObject) {
       console.log("The read failed: " + errorObject.code);
     });
   });
 }
+
 
 function results() {
   // I generate the table head in it's own function so I can call it again in other functions. 
@@ -211,5 +282,6 @@ function jsSetup() {
   processForm();
   results();
   getFire();
-  
+  getDirections();
+
 }
