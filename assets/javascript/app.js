@@ -56,7 +56,7 @@ function getDirections() {
   $('#directions-btn').on('click', function () {
     console.log("get directions has been clicked");
     // wunderground weather api
-    var queryURLLocation = "http://api.wunderground.com/api/828d2683238be78a/geolookup/q/autoip.json";
+    var queryURLLocation = "https://api.wunderground.com/api/828d2683238be78a/geolookup/q/autoip.json";
     $.ajax({
       url: queryURLLocation,
       method: "GET"
@@ -86,9 +86,54 @@ function getDirections() {
   });
 }
 
+var testLat;
+var testLon;
+$(document).ready(function () {
+  var startPos;
+  // var nudge = document.getElementById("nudge");
+
+  // var showNudgeBanner = function () {
+  //   nudge.style.display = "block";
+  // };
+
+  // var hideNudgeBanner = function () {
+  //   nudge.style.display = "none";
+  // };
+
+  // var nudgeTimeoutId = setTimeout(showNudgeBanner, 5000);
+
+  var geoSuccess = function (position) {
+    // hideNudgeBanner();
+    // // We have the location, don't display banner
+    // clearTimeout(nudgeTimeoutId);
+
+    // Do magic with location
+    startPos = position;
+    var testLat = startPos.coords.latitude;
+    var testLon = startPos.coords.longitude;
+
+  };
+  var geoError = function (error) {
+    switch (error.code) {
+      case error.TIMEOUT:
+        // The user didn't accept the callout
+        // showNudgeBanner();
+        break;
+    }
+  };
+  navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
+});
+
+$("#report-submit").on("click", function() {
+  console.log(testLat);
+  console.log(testLon);
+});
+
+
+
 function weatherAPI() {
   // wunderground weather api
-  var queryURLLocation = "http://api.wunderground.com/api/828d2683238be78a/geolookup/q/autoip.json";
+  var queryURLLocation = "https://api.wunderground.com/api/828d2683238be78a/geolookup/q/autoip.json";
   $.ajax({
     url: queryURLLocation,
     method: "GET"
@@ -202,7 +247,7 @@ $("#link").on("click", function () {
 function processForm() {
   var lat = '';
   var lon = '';
-  var queryURLLocation = "http://api.wunderground.com/api/828d2683238be78a/geolookup/q/autoip.json";
+  var queryURLLocation = "https://api.wunderground.com/api/828d2683238be78a/geolookup/q/autoip.json";
   $.ajax({
     url: queryURLLocation,
     method: "GET"
