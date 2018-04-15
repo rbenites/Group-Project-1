@@ -47,96 +47,96 @@
                         </span>
                     </div>
                     <div id="dynSt">
-                    <form id="rezQForm">
-                        <div class="form-row pb-2 mt-3">
-                            <div class="form-group col-md-6">
-                                <div class="input-group" id="input-group">
-                                    <div class="input-group-prepend d-flex flex-column">
-                                        <label for="">Who needs RezQing?</label>
-                                        <div class="custom-control custom-radio">
+                        <form id="rezQForm">
+                            <div class="form-row pb-2 mt-3">
+                                <div class="form-group col-md-6">
+                                    <div class="input-group" id="input-group">
+                                        <div class="input-group-prepend d-flex flex-column">
+                                            <label for="">Who needs RezQing?</label>
+                                            <div class="custom-control custom-radio">
 
-                                            <input id="person" name="person" class="custom-control-input" type="radio" value="you">
-                                            <label class="custom-control-label" for="person">Is this for you?</label>
+                                                <input id="person" name="person" class="custom-control-input" type="radio" value="you">
+                                                <label class="custom-control-label" for="person">Is this for you?</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input id="notPerson" value="notYou" name="person" class="custom-control-input" type="radio">
+                                                <label class="custom-control-label" for="notPerson">Is this for someone else?</label>
+                                            </div>
                                         </div>
-                                        <div class="custom-control custom-radio">
-                                            <input id="notPerson" value="notYou" name="person" class="custom-control-input" type="radio">
-                                            <label class="custom-control-label" for="notPerson">Is this for someone else?</label>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend d-flex flex-column">
+                                            <label for="">Person's Gender</label>
+                                            <div class="custom-control custom-radio">
+
+                                                <input id="male" name="gender" class="custom-control-input" type="radio" value="male">
+                                                <label class="custom-control-label" for="male">Male</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input id="female" value="female" name="gender" class="custom-control-input" type="radio" g>it
+                                                <label class="custom-control-label" for="female">Female</label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group col-md-6">
-                                <div class="input-group">
-                                    <div class="input-group-prepend d-flex flex-column">
-                                        <label for="">Person's Gender</label>
-                                        <div class="custom-control custom-radio">
-
-                                            <input id="male" name="gender" class="custom-control-input" type="radio" value="male">
-                                            <label class="custom-control-label" for="male">Male</label>
-                                        </div>
-                                        <div class="custom-control custom-radio">
-                                            <input id="female" value="female" name="gender" class="custom-control-input" type="radio" g>it
-                                            <label class="custom-control-label" for="female">Female</label>
-                                        </div>
-                                    </div>
+                            <div class="form-group mt-2">
+                                <label for="inputName">First Name of person in emergency </label>
+                                <input type="text" class="form-control" id="inputName" placeholder="ex: Harry P.">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-3">
+                                    <label for="inputAge">Age</label>
+                                    <input type="text" class="form-control" id="inputAge" name='age' placeholder="ex: 22">
+                                </div>
+                                <div class="form-group col-md-9">
+                                    <label for="inputNumber">Your phone number</label>
+                                    <input type="text" class="form-control" id="inputName" name='number' placeholder="ex: 213-757-2732">
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group mt-2">
-                            <label for="inputName">First Name of person in emergency </label>
-                            <input type="text" class="form-control" id="inputName" placeholder="ex: Harry P.">
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-3">
-                                <label for="inputAge">Age</label>
-                                <input type="text" class="form-control" id="inputAge" name='age' placeholder="ex: 22">
+                            <div class="form-group mt-3">
+                                <label for="loc">How alert is this person?</label>
+                                <select id="loc" class="form-control">
+                                    <option selected>Choose an option</option>
+                                    <option value="alert">Person is alert</option>
+                                    <option value="abnormal">Person is behaving abnormally</option>
+                                    <option value="unconscious">Person is unconscious</option>
+                                </select>
                             </div>
-                            <div class="form-group col-md-9">
-                                <label for="inputNumber">Your phone number</label>
-                                <input type="text" class="form-control" id="inputName" name='number' placeholder="ex: 213-757-2732">
+                            <div class="form-group">
+                                <label for="allergies">Any allergic reactions?</label>
+                                <select id="allergies" class="form-control">
+                                    <option selected>Choose an option</option>
+                                    <option value="pollen">Pollen</option>
+                                    <option value="dander">Animal Dander</option>
+                                    <option value="stings">Insect Stings</option>
+                                    <option value="mold">Mold</option>
+                                    <option value="food">Food</option>
+                                    <option value="latex">Latex</option>
+                                    <option value="medications">Medication</option>
+                                </select>
                             </div>
-                        </div>
-                        <div class="form-group mt-3">
-                            <label for="loc">How alert is this person?</label>
-                            <select id="loc" class="form-control">
-                                <option selected>Choose an option</option>
-                                <option value="alert">Person is alert</option>
-                                <option value="abnormal">Person is behaving abnormally</option>
-                                <option value="unconscious">Person is unconscious</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="allergies">Any allergic reactions?</label>
-                            <select id="allergies" class="form-control">
-                                <option selected>Choose an option</option>
-                                <option value="pollen">Pollen</option>
-                                <option value="dander">Animal Dander</option>
-                                <option value="stings">Insect Stings</option>
-                                <option value="mold">Mold</option>
-                                <option value="food">Food</option>
-                                <option value="latex">Latex</option>
-                                <option value="medications">Medication</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="mdclCond">Any preexisting medical conditions?</label>
-                            <select id="mdclCond" class="form-control">
-                                <option selected>Choose an option</option>
-                                <option value="heartAttack">Heart Attack</option>
-                                <option value="stroke">Stroke</option>
-                                <option value="anaphylaxis">Anaphylaxis</option>
-                                <option value="highBloodPressure">High Blood Pressure</option>
-                                <option value="diabetes">Diabetes</option>
-                                <option value="asthma">Asthma</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputComplaint">Your chief complaint</label>
-                            <textarea class="form-control" id="inputComplaint" name='complaint' placeholder="ex: I have fallen and I can't get up. I think my leg might be broken."></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-outline-info btn-lg w-100 mt-3">Report Emergency Now</button>
-                    </form>
+                            <div class="form-group">
+                                <label for="mdclCond">Any preexisting medical conditions?</label>
+                                <select id="mdclCond" class="form-control">
+                                    <option selected>Choose an option</option>
+                                    <option value="heartAttack">Heart Attack</option>
+                                    <option value="stroke">Stroke</option>
+                                    <option value="anaphylaxis">Anaphylaxis</option>
+                                    <option value="highBloodPressure">High Blood Pressure</option>
+                                    <option value="diabetes">Diabetes</option>
+                                    <option value="asthma">Asthma</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputComplaint">Your chief complaint</label>
+                                <textarea class="form-control" id="inputComplaint" name='complaint' placeholder="ex: I have fallen and I can't get up. I think my leg might be broken."></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-outline-info btn-lg w-100 mt-3">Report Emergency Now</button>
+                        </form>
                     </div>
                 </div>
                 <div class="col-12 col-md-6">
@@ -147,168 +147,29 @@
             </div>
         </div>
     </section>
-<!--ISOLATED CHAT AREA THIS WHOLE 'SECTION id="chatArea"' EVENTUALY NEEDS TO BE DELETED-->
-<section id="chatArea">
-        <div class="container-fluid">
+    <section id="secSte" class="d-none">
+        <div class="container-fluid p-0 m-0">
             <div class="row-fluid">
-                <!--ISOLATED CHAT START -->
-                <div class="col-12 py-4 px-3 card mb-4">
-                    <h5 class="card-header emrGnC text-white text-center">
-                        <i class="fa fa-heartbeat"></i>&nbsp;Emergency Chat</h5>
-                    <div id="fireChat" class="card-body">
-                        <div class="content-right">
-                            <div class="content-wrapper">
-                                <div class="content-header row">
-                                </div>
-                                <div class="content-body">
-                                    <section class="chat-app-window">
-                                        <div class="chats">
-                                            <div class="chats">
-                                                <!-- start  of chat for user ermGnc -->
-                                                <div class="chat">
-                                                    <div class="chat-avatar user_in_emergency">
-                                                        <a class="avatar" data-toggle="tooltip" href="#" data-placement="right" title="" data-original-title="">
-                                                            <img src="assets/img/avatar-s-1.png" alt="avatar">
-                                                        </a>
-                                                    </div>
-                                                    <div class="chat-body">
-                                                        <div class="chat-content user_chat_content">
-                                                            <p>How can we help? We're here for you!</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <p class="time">1 hours ago</p>
-                                                <!-- start of chat user EMT -->
-                                                <div class="chat chat-left">
-                                                    <div class="chat-avatar emt_name">
-                                                        <a class="avatar" data-toggle="tooltip" href="#" data-placement="left" title="" data-original-title="">
-                                                            <img src="assets/img/avatar-s-7.png" alt="avatar">
-                                                        </a>
-                                                    EMTEMTEMTEMT</div>
-                                                    <div class="chat-body">
-                                                        <div class="chat-content emt_chat_content">
-                                                            <p>Hey John, I am looking for the best admin template.</p>
-                                                            <p>Could you please help me to find it out?</p>
-                                                        <p>Chat user A</p><p>Chat EMT</p><p>trest</p><p>test</p></div>
-                                                        <div class="chat-content emt_chat_content">
-                                                            <p>It should be Bootstrap 4 compatible.</p>
-                                                        <p>Chat user A</p><p>Chat EMT</p><p>trest</p><p>test</p></div>
-                                                    </div>
-                                                </div>
-                                                <!-- chat for user ermGnc-->
-                                                <div class="chat">
-                                                    <div class="chat-avatar user_in_emergency">
-                                                        <a class="avatar" data-toggle="tooltip" href="#" data-placement="right" title="" data-original-title="">
-                                                            <img src="assets/img/avatar-s-1.png" alt="avatar">
-                                                        </a>
-                                                    </div>
-                                                    <div class="chat-body">
-                                                        <div class="chat-content user_chat_content">
-                                                            <p>Absolutely!</p>
-                                                        </div>
-                                                        <div class="chat-content user_chat_content">
-                                                            <p>Stack admin is the responsive bootstrap 4 admin template.</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <p class="time">1 hours ago</p>
-                                                <!-- chat for user EMT -->
-                                                <div class="chat chat-left">
-                                                    <div class="chat-avatar emt_name">
-                                                        <a class="avatar" data-toggle="tooltip" href="#" data-placement="left" title="" data-original-title="">
-                                                            <img src="assets/img/avatar-s-7.png" alt="avatar">
-                                                        </a>
-                                                    EMTEMTEMTEMT</div>
-                                                    <div class="chat-body">
-                                                        <div class="chat-content emt_chat_content">
-                                                            <p>Looks clean and fresh UI.</p>
-                                                        <p>Chat user A</p><p>Chat EMT</p><p>trest</p><p>test</p></div>
-                                                        <div class="chat-content emt_chat_content">
-                                                            <p>It's perfect for my next project.</p>
-                                                        <p>Chat user A</p><p>Chat EMT</p><p>trest</p><p>test</p></div>
-                                                        <div class="chat-content emt_chat_content">
-                                                            <p>How can I purchase it?</p>
-                                                        <p>Chat user A</p><p>Chat EMT</p><p>trest</p><p>test</p></div>
-                                                    </div>
-                                                </div>
-                                                <!-- chat for user ermGnc-->
-                                                <div class="chat">
-                                                    <div class="chat-avatar user_in_emergency">
-                                                        <a class="avatar" data-toggle="tooltip" href="#" data-placement="right" title="" data-original-title="">
-                                                            <img src="assets/img/avatar-s-1.png" alt="avatar">
-                                                        </a>
-                                                    </div>
-                                                    <div class="chat-body">
-                                                        <div class="chat-content user_chat_content">
-                                                            <p>Thanks, from ThemeForest.</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <p class="time">1 hours ago</p>
-                                                <!-- chat for user EMT -->
-                                                <div class="chat chat-left">
-                                                    <div class="chat-avatar emt_name">
-                                                        <a class="avatar" data-toggle="tooltip" href="#" data-placement="left" title="" data-original-title="">
-                                                            <img src="assets/img/avatar-s-7.png" alt="avatar">
-                                                        </a>
-                                                    EMTEMTEMTEMT</div>
-                                                    <div class="chat-body">
-                                                        <div class="chat-content emt_chat_content">
-                                                            <p>I will purchase it for sure.</p>
-                                                        <p>Chat user A</p><p>Chat EMT</p><p>trest</p><p>test</p></div>
-                                                        <div class="chat-content emt_chat_content">
-                                                            <p>Thanks.</p>
-                                                        <p>Chat user A</p><p>Chat EMT</p><p>trest</p><p>test</p></div>
-                                                    </div>
-                                                </div>
-                                                <!-- chat for user ermGnc-->
-                                                <div class="chat">
-                                                    <div class="chat-avatar user_in_emergency">
-                                                        <a class="avatar" data-toggle="tooltip" href="#" data-placement="right" title="" data-original-title="">
-                                                            <img src="assets/img/avatar-s-1.png" alt="avatar">
-                                                        </a>
-                                                    </div>
-                                                    <div class="chat-body">
-                                                        <div class="chat-content user_chat_content">
-                                                            <p>Great, Feel free to get in touch on</p>
-                                                        </div>
-                                                        <div class="chat-content user_chat_content">
-                                                            <p>https://pixinvent.ticksy.com/</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
-                                    <section class="chat-app-form">
-                                        <form class="chat-app-input d-flex">
-                                            <fieldset class="form-group position-relative has-icon-left col-10 m-0">
-                                                <div class="form-control-position">
-                                                    <i class="icon-emoticon-smile"></i>
-                                                </div>
-                                                <input class="form-control emt_chat" id="iconLeft4" placeholder="Type your message" type="text">
-                                                <div class="form-control-position control-position-right">
-                                                    <i class="ft-image"></i>
-                                                </div>
-                                            </fieldset>
-                                            <fieldset class="form-group position-relative has-icon-left col-2 m-0">
-                                                <button type="button" class="btn btn-primary emt_send">
-                                                    <i class="fa fa-paper-plane-o d-lg-none"></i>
-                                                    <span id="emt_send" class="d-none d-lg-block">Send</span>
-                                                </button>
-                                            </fieldset>
-                                        </form>
-                                    </section>
-                                </div>
-                            </div>
+                <div id="map">
+                    <div class="map-responsive">
+                        <iframe src="https://www.google.com/maps/embed/v1/search?key=AIzaSyCF_5x7AkAOH8T7ijrquPSF5Lo3dullSiA&amp;q=Los Angeles" style="border:0"
+                            width="600" height="250" frameborder="0"></iframe>
+                    </div>
+                </div>
+                <div class="col-12 py-4 px-3">
+                    <div id="heading" class="d-flex flex-column text-center flex-md-row justify-content-center mb-3 mt-2 px-2">
+                        <h2>Get RezQewd</h2>
+                        <span class="lead ml-2 text-center">
+                            <em class="px-0 px-md-2 py-1 d-flex  align-self-center justify-content-center justify-content-md-start">"Getting you help faster"</em>
+                        </span>
+                    </div>
+                    <div class="col-12">
+                        <div id="chat">
                         </div>
                     </div>
                 </div>
-                <!--End ISOlTED CHAT-->
             </div>
-        </div>
     </section>
-
     <footer>
         <div class="container-fluid bg-dark text-light d-flex justify-content-center">
             <div class="row px-4 py-3">
@@ -328,8 +189,15 @@
         crossorigin="anonymous"></script>
     <!--FireBase-->
     <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
+    <!-- Weather JS -->
+    <script src="assets/javascript/weather.js"></script>
+    <!--Chat JS -->
+    <script src="assets/javascript/chat.js"></script>
+
     <!-- App JS -->
     <script src="assets/javascript/app.js"></script>
 
+
 </body>
+
 </html>
