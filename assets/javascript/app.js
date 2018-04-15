@@ -15,10 +15,11 @@ database = firebase.database();
 /*:::::::: GLOBAL VARIABLES :::::::::*/
 var appId = "C467D171-6024-43EC-9943-FE2E0478AFBD";
 var apiToken = "623cd37c96fc7faf33dd41b5e68894169d567d91";
-var tHeadItems = ["Patient ID", "Date", "Who Needs Help", "Gender", "Name", "Age", "Number", "LOC", "Allergies", "Medical History","Chief Complaint", "Actions"];
+var tHeadItems = ["Patient ID", "Date", "Who Needs Help", "Gender", "Name", "Age", "Number", "LOC", "Allergies", "Medical History", "Chief Complaint", "Actions"];
 var thead = $("#thead");
 var tableResults = $("#tableResults");
-var icon = '<i class="fa fa-trash-o text-white"></i>';
+var dBtn = '';
+var fBtn = '';
 var name = '';
 var age = '';
 var number = '';
@@ -33,10 +34,12 @@ var gMapsAPIKey = 'AIzaSyCF_5x7AkAOH8T7ijrquPSF5Lo3dullSiA';
 
 /* Start the JS setup with document.ready*/
 $(document).ready(function () {
+// This is here for testing. 
+  chatInit();
   var testLat;
   var testLon;
   jsSetup();
-
+// Initialize tooltip component
   $("#report-submit").on("click", function () {
     console.log(testLat);
     console.log(testLon);
@@ -136,45 +139,6 @@ function getLoc() {
   navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
 }
 
-function weatherAPI() {
-  // wunderground weather api
-  var queryURLLocation = "https://api.wunderground.com/api/828d2683238be78a/geolookup/q/autoip.json";
-  $.ajax({
-    url: queryURLLocation,
-    method: "GET"
-  })
-    // this gets the location from the IP address from wunderground
-    .then(function (response) {
-      $("#location").html("You are in " + response.location.city);
-      $("#long").html(response.location.lon + " Longitude");
-      $("#lat").html(response.location.lat + " Latitude");
-      // grabbing the city name and location from the api 
-      // cityName grabs the name of the city from the API for use on the open weather map api 
-      var cityName = response.location.city;
-
-      // open weather map api
-      var queryURLWeather = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&units=imperial&APPID=1faeb28f5befbdab79657bc5ee510ef3";
-      // this query url gets the city name from the other api and generates information from it 
-      $.ajax({
-        url: queryURLWeather,
-        method: "GET"
-      })
-        .then(function (response) {
-          $("#temperature").html(response.main.temp + " °F");
-        });
-
-      // google maps api
-      // the google maps api also takes the city name from the wunderground api
-      var mapsEmbed = $("<iframe>");
-      mapsEmbed.attr("src", "https://www.google.com/maps/embed/v1/search?key=AIzaSyCF_5x7AkAOH8T7ijrquPSF5Lo3dullSiA&q=" + cityName);
-      mapsEmbed.attr("width", "600");
-      mapsEmbed.attr("height", "750");
-      mapsEmbed.attr("frameborder", "0");
-      mapsEmbed.attr("style", "border:0");
-      $("#map").html(mapsEmbed);
-    });
-}
-
 function user_fireChat() {
   var user_in_emergency = "";
   var text_input = "";
@@ -243,16 +207,23 @@ function getFire() {
   ref.on("value", function (snapshot) {
     var csDta = snapshot.val();
     var keys = Object.keys(csDta);
-    for (var x = 0; x < keys.length; x++) {
 
+
+
+    for (var x = 0; x < keys.length; x++) {
       var k = keys[x];
       var date = csDta[k].date;
-      console.log(csDta[k].aller);
-
+      var dIcon = $('<i>').addClass('fa fa-trash-o text-white');
+      var fIcon = $('<i>').addClass('fa fa-eye text-white');
+      var fBtn = $('<button>').addClass('btn vw bg-primary mr-1').attr('data-key', k).html(fIcon);
+      var dBtn = $('<button>').addClass('btn dr bg-danger').attr('data-key', k).html(dIcon);
+      var td =  $('<td>').addClass('action');
+      var nRow = td.append(fBtn).append(dBtn);
       // Table generation is here
+      var fireHdr = $('<tr>');
+      fireHdr.addClass('dataRW');
       var fireData = "";
-      fireData += "<tr class='dataRW' id='tr" + x + "'>";
-      fireData += "<td class='btn btn-link'>" + x + "</td>";
+      fireData += "<td>" + x + "</td>";
       fireData += "<td>" + csDta[k].date + "</td>";
       fireData += "<td>" + csDta[k].person + "</td>";
       fireData += "<td>" + csDta[k].gender + "</td>";
@@ -263,10 +234,9 @@ function getFire() {
       fireData += "<td>" + csDta[k].allergies + "</td>";
       fireData += "<td>" + csDta[k].medical + "</td>";
       fireData += "<td>" + csDta[k].complaint + "</td>";
-      fireData += "<td><button class='btn dr bg-danger' data-key='" + k + "'>" + icon + "</button></td>";
-      fireData += "</tr>";
-
-      $("#thead").append(fireData);
+       fireHdr.html(fireData);
+       fireHdr.append(nRow);
+      $("#thead").append(fireHdr);
     }
   });
 }
@@ -283,9 +253,9 @@ function processForm() {
   var lon = '';
   var queryURLLocation = "https://api.wunderground.com/api/828d2683238be78a/geolookup/q/autoip.json";
   $.ajax({
-    url: queryURLLocation,
-    method: "GET"
-  })
+      url: queryURLLocation,
+      method: "GET"
+    })
     // this gets the location from the IP address from wunderground
     .then(function (response) {
       $("#location").html("You are in " + response.location.city);
@@ -337,116 +307,239 @@ function processForm() {
     }, function (errorObject) {
       console.log("The read failed: " + errorObject.code);
     });
-    var dynSt =  $('#dynSt');
+    var dynSt = $('#dynSt');
     dynSt.html(' ');
     var alert = $('<div>');
     alert.addClass('alert alert-success');
-    alert.attr('role','alert');
+    alert.attr('role', 'alert');
     console.log(alert);
     alert.text('You message has been sent. A chat will open up shortly');
     dynSt.append(alert);
-     setTimeout(() => {
+    setTimeout(() => {
       dynSt.html(' ');
-    setChat();
+      setChat();
       // 	chatIamge.attr('src', 'img/chat_2.png');
     }, 5000);
-   
+
 
   });
- 
+
 }
-function setChat(){
-  // THIS IS HORRIBLE I KNOW BUT IT IS FOR DEV PURPOSES SO WE CAN ISOLATE THE CHAT AND HAVE THE PROCESS FUNCTIONALITY WORK
- var setChat = '<div class="col-12 py-4 px-3 card mb-4">' +
- ' <h5 class="card-header emrGnC text-white text-center">' +
- '<i class="fa fa-heartbeat"></i>&nbsp;Emergency Chat</h5> ' +
-'<div id="fireChat" class="card-body"> ' +
- '<div class="content-right"> ' +
+
+function setChat() {
+  $('#dynSt').html(' ');
+
+  var setChat = '<div class="content-right"> ' +
     ' <div class="content-wrapper"> ' +
-         '<div class="content-header row"> ' +
-        '</div> ' +
-        '<div class="content-body"> ' +
-        '    <section class="chat-app-window"> ' +
-        '        <div class="chats"> ' +
-        '            <div class="chats"> ' +
-        '                <!-- start  of chat for user ermGnc --> ' +
-        '                <div class="chat"> ' +
-        '                    <div class="chat-avatar user_in_emergency"> ' +
-        '                        <a class="avatar" data-toggle="tooltip" href="#" data-placement="right" title="" data-original-title=""> ' +
-        '                            <img src="assets/img/avatar-s-1.png" alt="avatar">  ' +
-        '                        </a> ' +
-        '                    </div>  ' +
-        '                    <div class="chat-body"> ' +
-        '                        <div class="chat-content user_chat_content"> ' +
-        '                            <p>How can we help? Were here for you!</p>  ' +
-        '                        </div> ' +
-        '                    </div> ' +
-        '                </div> ' +
-        '                <p class="time">1 hours ago</p> ' +
-        '                <!-- start of chat user EMT --> ' +
-        '                <div class="chat chat-left"> ' +
-        '                    <div class="chat-avatar emt_name"> ' +
-        '                        <a class="avatar" data-toggle="tooltip" href="#" data-placement="left" title="" data-original-title=""> ' +
-        '                            <img src="assets/img/avatar-s-7.png" alt="avatar"> ' +
-        '                        </a> ' +
-        '                    </div> ' +
-        '                    <div class="chat-body"> ' +
-        '                         <div class="chat-content emt_chat_content"> ' +
-        '                            <p>Hey John, I am looking for the best admin template.</p> ' +
-        '                            <p>Could you please help me to find it out?</p> ' +
-        '                        </div> ' +
-        '                        <div class="chat-content emt_chat_content"> ' +
-        '                            <p>It should be Bootstrap 4 compatible.</p> ' +
-        '                        </div> ' +
-        '                    </div> ' +
-        '                </div> ' +
-        '                <!-- chat for user ermGnc--> ' +
-        '                <div class="chat"> ' +
-        '                    <div class="chat-avatar user_in_emergency"> ' +
-        '                        <a class="avatar" data-toggle="tooltip" href="#" data-placement="right" title="" data-original-title=""> ' +
-        '                            <img src="assets/img/avatar-s-1.png" alt="avatar"> ' +
-        '                        </a> ' +
-        '                    </div> ' +
-        '                    <div class="chat-body"> ' +
-        '                        <div class="chat-content user_chat_content"> ' +
-        '                            <p>Absolutely!</p> ' +
-        '                        </div> ' +
-        '                        <div class="chat-content user_chat_content"> ' +
-        '                            <p>Stack admin is the responsive bootstrap 4 admin template.</p> ' +
-        '                        </div> ' +
-        '                    </div> ' +
-        '                </div> ' +
-        '                <p class="time">1 hours ago</p> ' +
-        '                    </div> ' +
-        '                    </div> ' +
-        '                    </div> ' +
-        '                  </section> ' +
-'<section class="chat-app-form">' +
-'   <form class="chat-app-input d-flex">' +
-'       <fieldset class="form-group position-relative has-icon-left col-10 m-0">' +
-'           <div class="form-control-position">' +
-'               <i class="icon-emoticon-smile"></i>' +
-                '                    </div> ' +
-                '           <input class="form-control emt_chat" id="iconLeft4" placeholder="Type your message" type="text">' +
-                '  <div class="form-control-position control-position-right">' +
-                ' <i class="ft-image"></i>' +
-                '                    </div> ' +
-                ' </fieldset>' +
-                ' <fieldset class="form-group position-relative has-icon-left col-2 m-0">' +
-                ' <button type="button" class="btn btn-primary emt_send">' +
-                ' <i class="fa fa-paper-plane-o d-lg-none"></i>' +
-                ' <span id="emt_send" class="d-none d-lg-block">Send</span>' +
-                ' </button>' +
-                '</fieldset>' +
-                '</form>' +
+    '<div class="content-header row"> ' +
+    '</div> ' +
+    '<div class="content-body"> ' +
+    '    <section class="chat-app-window"> ' +
+    '        <div class="chats"> ' +
+    '            <div class="chats"> ' +
+    '                <!-- start  of chat for user ermGnc --> ' +
+    '                <div class="chat"> ' +
+    '                    <div class="chat-avatar user_in_emergency"> ' +
+    '                        <a class="avatar" data-toggle="tooltip" href="#" data-placement="right" title="" data-original-title=""> ' +
+    '                            <img src="assets/img/avatar-s-1.png" alt="avatar">  ' +
+    '                        </a> ' +
+    '                    </div>  ' +
+    '                    <div class="chat-body"> ' +
+    '                        <div class="chat-content user_chat_content"> ' +
+    '                            <p>How can we help? Were here for you!</p>  ' +
+    '                        </div> ' +
+    '                    </div> ' +
+    '                </div> ' +
+    '                <p class="time">1 hours ago</p> ' +
+    '                <!-- start of chat user EMT --> ' +
+    '                <div class="chat chat-left"> ' +
+    '                    <div class="chat-avatar emt_name"> ' +
+    '                        <a class="avatar" data-toggle="tooltip" href="#" data-placement="left" title="" data-original-title=""> ' +
+    '                            <img src="assets/img/avatar-s-7.png" alt="avatar"> ' +
+    '                        </a> ' +
+    '                    </div> ' +
+    '                    <div class="chat-body"> ' +
+    '                         <div class="chat-content emt_chat_content"> ' +
+    '                            <p>Hey John, I am looking for the best admin template.</p> ' +
+    '                            <p>Could you please help me to find it out?</p> ' +
+    '                        </div> ' +
+    '                        <div class="chat-content emt_chat_content"> ' +
+    '                            <p>It should be Bootstrap 4 compatible.</p> ' +
+    '                        </div> ' +
+    '                    </div> ' +
+    '                </div> ' +
+    '                <!-- chat for user ermGnc--> ' +
+    '                <div class="chat"> ' +
+    '                    <div class="chat-avatar user_in_emergency"> ' +
+    '                        <a class="avatar" data-toggle="tooltip" href="#" data-placement="right" title="" data-original-title=""> ' +
+    '                            <img src="assets/img/avatar-s-1.png" alt="avatar"> ' +
+    '                        </a> ' +
+    '                    </div> ' +
+    '                    <div class="chat-body"> ' +
+    '                        <div class="chat-content user_chat_content"> ' +
+    '                            <p>Absolutely!</p> ' +
+    '                        </div> ' +
+    '                        <div class="chat-content user_chat_content"> ' +
+    '                            <p>Stack admin is the responsive bootstrap 4 admin template.</p> ' +
+    '                        </div> ' +
+    '                    </div> ' +
+    '                </div> ' +
+    '                <p class="time">1 hours ago</p> ' +
+    '                    </div> ' +
+    '                    </div> ' +
+    '                    </div> ' +
     '                  </section> ' +
-'                    </div> ' +
+    '<section class="chat-app-form">' +
+    '   <form class="chat-app-input d-flex">' +
+    '       <fieldset class="form-group position-relative has-icon-left col-10 m-0">' +
+    '           <div class="form-control-position">' +
+    '               <i class="icon-emoticon-smile"></i>' +
+    '                    </div> ' +
+    '           <input class="form-control emt_chat" id="iconLeft4" placeholder="Type your message" type="text">' +
+    '  <div class="form-control-position control-position-right">' +
+    ' <i class="ft-image"></i>' +
+    '                    </div> ' +
+    ' </fieldset>' +
+    ' <fieldset class="form-group position-relative has-icon-left col-2 m-0">' +
+    ' <button type="button" class="btn btn-primary emt_send">' +
+    ' <i class="fa fa-paper-plane-o d-lg-none"></i>' +
+    ' <span id="emt_send" class="d-none d-lg-block"> <i class="fa fa-comments"></i> Send</span>' +
+    ' </button>' +
+    '</fieldset>' +
+    '</form>' +
+    '                  </section> ' +
+    '                    </div> ' +
+    '                    </div> ' +
+    '                    </div> ';
+  console.log(setChat);
+  // THIS IS HORRIBLE I KNOW BUT IT IS FOR DEV PURPOSES SO WE CAN ISOLATE THE CHAT AND HAVE THE PROCESS FUNCTIONALITY WORK
+  var chatCont = $('<div>');
+  chatCont.addClass('col-12 py-4 px-3 card mb-4');
+  console.log(chatCont);
+  var chatTitle = $('<h5>');
+  chatTitle.addClass('card-header emrGnC text-white text-center');
+  var icon = $('<i>');
+  icon.addClass('fa fa-heartbeat');
+  chatTitle.append(icon);
+  chatTitle.append('&nbsp;Emergency Chat');
+  console.log(chatTitle);
+  var fireChat = $('<div id="fireChat">');
+  fireChat.addClass('card-body');
+  console.log(fireChat);
+  chatCont.append(chatTitle);
+  fireChat.append(setChat);
+  chatCont.append(fireChat);
+  $('#dynSt').html(chatCont);
+  $('#chat').html(' ');
+  console.log( $('#chat'));
+  //$('#chat').html(chatCont);
+}
+
+function chatInit(){
+  var setChat = '<div class="content-right"> ' +
+  ' <div class="content-wrapper"> ' +
+  '<div class="content-header row"> ' +
+  '</div> ' +
+  '<div class="content-body"> ' +
+  '    <section class="chat-app-window"> ' +
+  '        <div class="chats"> ' +
+  '            <div class="chats"> ' +
+  '                <!-- start  of chat for user ermGnc --> ' +
+  '                <div class="chat"> ' +
+  '                    <div class="chat-avatar user_in_emergency"> ' +
+  '                        <a class="avatar" data-toggle="tooltip" href="#" data-placement="right" title="" data-original-title=""> ' +
+  '                            <img src="assets/img/avatar-s-1.png" alt="avatar">  ' +
+  '                        </a> ' +
+  '                    </div>  ' +
+  '                    <div class="chat-body"> ' +
+  '                        <div class="chat-content user_chat_content"> ' +
+  '                            <p>How can we help? Were here for you!</p>  ' +
+  '                        </div> ' +
   '                    </div> ' +
-  '                    </div> ' ;
+  '                </div> ' +
+  '                <p class="time">1 hours ago</p> ' +
+  '                <!-- start of chat user EMT --> ' +
+  '                <div class="chat chat-left"> ' +
+  '                    <div class="chat-avatar emt_name"> ' +
+  '                        <a class="avatar" data-toggle="tooltip" href="#" data-placement="left" title="" data-original-title=""> ' +
+  '                            <img src="assets/img/avatar-s-7.png" alt="avatar"> ' +
+  '                        </a> ' +
+  '                    </div> ' +
+  '                    <div class="chat-body"> ' +
+  '                         <div class="chat-content emt_chat_content"> ' +
+  '                            <p>Hey John, I am looking for the best admin template.</p> ' +
+  '                            <p>Could you please help me to find it out?</p> ' +
+  '                        </div> ' +
+  '                        <div class="chat-content emt_chat_content"> ' +
+  '                            <p>It should be Bootstrap 4 compatible.</p> ' +
+  '                        </div> ' +
+  '                    </div> ' +
+  '                </div> ' +
+  '                <!-- chat for user ermGnc--> ' +
+  '                <div class="chat"> ' +
+  '                    <div class="chat-avatar user_in_emergency"> ' +
+  '                        <a class="avatar" data-toggle="tooltip" href="#" data-placement="right" title="" data-original-title=""> ' +
+  '                            <img src="assets/img/avatar-s-1.png" alt="avatar"> ' +
+  '                        </a> ' +
+  '                    </div> ' +
+  '                    <div class="chat-body"> ' +
+  '                        <div class="chat-content user_chat_content"> ' +
+  '                            <p>Absolutely!</p> ' +
+  '                        </div> ' +
+  '                        <div class="chat-content user_chat_content"> ' +
+  '                            <p>Stack admin is the responsive bootstrap 4 admin template.</p> ' +
+  '                        </div> ' +
+  '                    </div> ' +
+  '                </div> ' +
+  '                <p class="time">1 hours ago</p> ' +
+  '                    </div> ' +
+  '                    </div> ' +
+  '                    </div> ' +
+  '                  </section> ' +
+  '<section class="chat-app-form">' +
+  '   <form class="chat-app-input d-flex">' +
+  '       <fieldset class="form-group position-relative has-icon-left col-10 m-0">' +
+  '           <div class="form-control-position">' +
+  '               <i class="icon-emoticon-smile"></i>' +
+  '                    </div> ' +
+  '           <input class="form-control emt_chat" id="iconLeft4" placeholder="Type your message" type="text">' +
+  '  <div class="form-control-position control-position-right">' +
+  ' <i class="ft-image"></i>' +
+  '                    </div> ' +
+  ' </fieldset>' +
+  ' <fieldset class="form-group position-relative has-icon-left col-2 m-0">' +
+  ' <button type="button" class="btn btn-primary emt_send">' +
+  ' <i class="fa fa-paper-plane-o d-lg-none"></i>' +
+  ' <span id="emt_send" class="d-none d-lg-block"> <i class="fa fa-comments"></i> Send</span>' +
+  ' </button>' +
+  '</fieldset>' +
+  '</form>' +
+  '                  </section> ' +
+  '                    </div> ' +
+  '                    </div> ' +
+  '                    </div> ';
 console.log(setChat);
-$('#dynSt').html(' ');
-$('#dynSt').html(setChat);
-}   
+// THIS IS HORRIBLE I KNOW BUT IT IS FOR DEV PURPOSES SO WE CAN ISOLATE THE CHAT AND HAVE THE PROCESS FUNCTIONALITY WORK
+var chatCont = $('<div>');
+chatCont.addClass('col-12 py-4 px-3 card mb-4');
+console.log(chatCont);
+var chatTitle = $('<h5>');
+chatTitle.addClass('card-header emrGnC text-white text-center');
+var icon = $('<i>');
+icon.addClass('fa fa-heartbeat');
+chatTitle.append(icon);
+chatTitle.append('&nbsp;Emergency Chat');
+console.log(chatTitle);
+var fireChat = $('<div id="fireChat">');
+fireChat.addClass('card-body');
+console.log(fireChat);
+chatCont.append(chatTitle);
+fireChat.append(setChat);
+chatCont.append(fireChat);
+$('#chat').html(' ');
+$('#chat').html(chatCont);
+  
+}
 
 function results() {
   // I generate the table head in it's own function so I can call it again in other functions. 
@@ -465,7 +558,6 @@ function results() {
 
 /* I use this function to call the JS of my app */
 function jsSetup() {
-  weatherAPI();
   user_fireChat();
   emt_fireChat();
   processForm();
