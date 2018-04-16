@@ -19,6 +19,7 @@
   font-size: .8rem;
   text-align: center;
   margin: 2rem 0;
+  clear: both;
 }
 
 .chat-body {
@@ -81,12 +82,15 @@
 .chat {
   width: 65%;
   clear: both;
+  min-height: 5rem;
 }
 
 .chat-avatar {
   float: left;
 }
-
+#chtBdy {
+  min-height: 11rem;
+}
 
 @media (max-width: 575px) {
   .chat {

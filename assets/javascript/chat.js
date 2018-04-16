@@ -1,231 +1,216 @@
-
 /* Start the JS setup with document.ready*/
 $(document).ready(function () {
-    chatInit();
-  
+  chatInit();
+
+  // I commented  your function calls  bec I eded to set it up for you. You can now go back through your code and send them through to two functions I created for you.  
+  //  rChat(chtMsg);  ~ rescuer function 
+  //  eChat(chtMsg);  ~ person in trouble function 
+
+  var bool = true;
+  $('.emt_send').on('click', function (e) {
+    e.preventDefault();
+    var chtMsg = $('#chatMsg').val().trim();
+    $('.alert').addClass('d-none');
+    console.log(bool);
+    if (bool === true) {
+      rChat(chtMsg);
+      bool = false;
+    } else {
+      eChat(chtMsg);
+      bool = true;
+    }
+  });
   //  user_fireChat();
   //  emt_fireChat();
 });
 
+
+function rChat(rMsg) {
+  var d = new Date();
+  var date = d.toLocaleString([], {
+    hour12: true
+  });
+
+  var chtBdy = $('#chtBdy');
+  // this creates the left side chat styling. 
+  var rIn = $('<div>').addClass('chat');
+  var rvTr = $('<div>').addClass('chat-avatar reZQr');
+  var rvTrA = $('<a>').addClass('avatar').attr('data-toggle', 'tooltip').attr('href', '#');
+  var rvTrM = $('<img>').attr('src', 'assets/img/avatar-s-1.png');
+  // the time needs to have more logic behind it. 
+ // var time = $('<p>').addClass('time').text(date);
+  var rezMz = $('<div>').addClass('chat-body').append($('<div>').addClass('chat-content emt_chat_content').text(rMsg)); // rMsg in this function is your input for variable you can get and set in firebase
+
+  rvTrA.append(rvTrM);
+  rvTr.append(rvTrA);
+  rIn.append(rvTr);
+  rIn.append(rezMz);
+
+  chtBdy.append(rIn);
+  //chtBdy.append(time);
+  //rIn.append(time);
+  
+}
+  // this creates the ride side chat styling. 
+function eChat(eMsg) {
+  var d = new Date();
+  var date = d.toLocaleString([], {
+    hour12: true
+  });
+
+  var chtBdy = $('#chtBdy');
+  var rIn = $('<div>').addClass('chat  chat-left');
+  var rvTr = $('<div>').addClass('chat-avatar user_in_emergency');
+  var rvTrA = $('<a>').addClass('avatar').attr('data-toggle', 'tooltip').attr('href', '#');
+  var rvTrM = $('<img>').attr('src', 'assets/img/avatar-s-7.png');
+  var time = $('<p>').addClass('time').text(date);
+  var rezMz = $('<div>').addClass('chat-body').append($('<div>').addClass('chat-content user_chat_content').text(eMsg));
+
+  rvTrA.append(rvTrM);
+  rvTr.append(rvTrA);
+  rIn.append(rvTr);
+  rIn.append(rezMz);
+
+  chtBdy.append(rIn);
+  chtBdy.append(time);
+  //rIn.append(time);
+  
+}
+
+
+
 function emt_fireChat() {
-    var emt_name = "EMT";
-    var text_input = "";
-    //on button click to send user name and text message
-    $(".emt_send").on("click", function (event) {
-      event.preventDefault();
-  
-      //get the date in the field
-      var text_input = $('.emt_chat').val().trim();
-      //code for handling the push to firebase
-      database.ref('/chatResqr').push({
-        emt_name: emt_name,
-        text_input: text_input,
-        //dateAdded: firebase.database.ServerValue.TIMESTAMP
-      }, function (errorObject) {
-        console.log("The read failed: " + errorObject.code);
-      });
-      //console.log(user_in_emergency);
-      console.log(text_input);
-    });
-    database.ref('/chatResqr').on("child_added", function (childSnapshot) {
-      $(".emt_name").append(childSnapshot.val().emt_name);
-      $(".emt_chat_content").append("<p>" + childSnapshot.val().text_input);
-      $(".emt_chat").val("");
+  var emt_name = "EMT";
+  var text_input = "";
+  //on button click to send user name and text message
+  $(".emt_send").on("click", function (event) {
+    event.preventDefault();
+
+    //get the date in the field
+    var text_input = $('.emt_chat').val().trim();
+    //code for handling the push to firebase
+    database.ref('/chatResqr').push({
+      emt_name: emt_name,
+      text_input: text_input,
+      //dateAdded: firebase.database.ServerValue.TIMESTAMP
     }, function (errorObject) {
       console.log("The read failed: " + errorObject.code);
     });
-  }
+    //console.log(user_in_emergency);
+    console.log(text_input);
+  });
+  database.ref('/chatResqr').on("child_added", function (childSnapshot) {
+    $(".emt_name").append(childSnapshot.val().emt_name);
+    $(".emt_chat_content").append("<p>" + childSnapshot.val().text_input);
+    $(".emt_chat").val("");
+  }, function (errorObject) {
+    console.log("The read failed: " + errorObject.code);
+  });
+}
 
-  
+
 function user_fireChat() {
-    var user_in_emergency = "";
-    var text_input = "";
-    //on button click to send user name and text message
-    $(".user_send").on("click", function (event) {
-      event.preventDefault();
-  
-      //get the date in the field
-      var user_in_emergency = $('#inputName').val().trim();
-      var text_input = $('.user_chat').val().trim();
-      //code for handling the push to firebase
-      database.ref('/chatResqe').push({
-        user_in_emergency: user_in_emergency,
-        text_input: text_input,
-        //dateAdded: firebase.database.ServerValue.TIMESTAMP
-      }, function (errorObject) {
-        console.log("The read failed: " + errorObject.code);
-      });
-      console.log(user_in_emergency);
-      console.log(text_input);
-    });
-    database.ref('/chatResqe').on("child_added", function (childSnapshot) {
-      $(".user_in_emergency").append(childSnapshot.val().user_in_emergency);
-      $(".user_chat_content").append("<p>" + childSnapshot.val().text_input);
-      $(".user_chat").val("");
+  var user_in_emergency = "";
+  var text_input = "";
+  //on button click to send user name and text message
+  $(".user_send").on("click", function (event) {
+    event.preventDefault();
+
+    //get the date in the field
+    var user_in_emergency = $('#inputName').val().trim();
+    var text_input = $('.user_chat').val().trim();
+    //code for handling the push to firebase
+    database.ref('/chatResqe').push({
+      user_in_emergency: user_in_emergency,
+      text_input: text_input,
+      //dateAdded: firebase.database.ServerValue.TIMESTAMP
     }, function (errorObject) {
       console.log("The read failed: " + errorObject.code);
     });
-  }
+    console.log(user_in_emergency);
+    console.log(text_input);
+  });
+  database.ref('/chatResqe').on("child_added", function (childSnapshot) {
+    $(".user_in_emergency").append(childSnapshot.val().user_in_emergency);
+    $(".user_chat_content").append("<p>" + childSnapshot.val().text_input);
+    $(".user_chat").val("");
+  }, function (errorObject) {
+    console.log("The read failed: " + errorObject.code);
+  });
+}
 
 
-function setChat() {
-    $('#dynSt').html(' ');
-    var setChat = '<div class="content-right"> ' +
-      ' <div class="content-wrapper"> ' +
-      '<div class="content-header row"> ' +
-      '</div> ' +
-      '<div class="content-body"> ' +
-      '    <section class="chat-app-window"> ' +
-      '        <div class="chats"> ' +
-      '            <div class="chats"> ' +
-      '                <!-- start  of chat for user ermGnc --> ' +
-      '                <div class="chat"> ' +
-      '                    <div class="chat-avatar user_in_emergency"> ' +
-      '                        <a class="avatar" data-toggle="tooltip" href="#" data-placement="right" title="" data-original-title=""> ' +
-      '                            <img src="assets/img/avatar-s-1.png" alt="avatar">  ' +
-      '                        </a> ' +
-      '                    </div>  ' +
-      '                    <div class="chat-body"> ' +
-      '                        <div class="chat-content user_chat_content"> ' +
-      '                            <p>How can we help? Were here for you!</p>  ' +
-      '                        </div> ' +
-      '                    </div> ' +
-      '                </div> ' +
-      '                <p class="time">1 hours ago</p> ' +
-      '                <!-- start of chat user EMT --> ' +
-      '                <div class="chat chat-left"> ' +
-      '                    <div class="chat-avatar emt_name"> ' +
-      '                        <a class="avatar" data-toggle="tooltip" href="#" data-placement="left" title="" data-original-title=""> ' +
-      '                            <img src="assets/img/avatar-s-7.png" alt="avatar"> ' +
-      '                        </a> ' +
-      '                    </div> ' +
-      '                    <div class="chat-body"> ' +
-      '                         <div class="chat-content emt_chat_content"> ' +
-      '                            <p>Hey John, I am looking for the best admin template.</p> ' +
-      '                            <p>Could you please help me to find it out?</p> ' +
-      '                        </div> ' +
-      '                        <div class="chat-content emt_chat_content"> ' +
-      '                            <p>It should be Bootstrap 4 compatible.</p> ' +
-      '                        </div> ' +
-      '                    </div> ' +
-      '                </div> ' +
-      '                <!-- chat for user ermGnc--> ' +
-      '                <div class="chat"> ' +
-      '                    <div class="chat-avatar user_in_emergency"> ' +
-      '                        <a class="avatar" data-toggle="tooltip" href="#" data-placement="right" title="" data-original-title=""> ' +
-      '                            <img src="assets/img/avatar-s-1.png" alt="avatar"> ' +
-      '                        </a> ' +
-      '                    </div> ' +
-      '                    <div class="chat-body"> ' +
-      '                        <div class="chat-content user_chat_content"> ' +
-      '                            <p>Absolutely!</p> ' +
-      '                        </div> ' +
-      '                        <div class="chat-content user_chat_content"> ' +
-      '                            <p>Stack admin is the responsive bootstrap 4 admin template.</p> ' +
-      '                        </div> ' +
-      '                    </div> ' +
-      '                </div> ' +
-      '                <p class="time">1 hours ago</p> ' +
-      '                    </div> ' +
-      '                    </div> ' +
-      '                    </div> ' +
-      '                  </section> ' +
-      '<section class="chat-app-form">' +
-      '   <form class="chat-app-input d-flex">' +
-      '       <fieldset class="form-group position-relative has-icon-left col-10 m-0">' +
-      '           <div class="form-control-position">' +
-      '               <i class="icon-emoticon-smile"></i>' +
-      '                    </div> ' +
-      '           <input class="form-control emt_chat" id="iconLeft4" placeholder="Type your message" type="text">' +
-      '  <div class="form-control-position control-position-right">' +
-      ' <i class="ft-image"></i>' +
-      '                    </div> ' +
-      ' </fieldset>' +
-      ' <fieldset class="form-group position-relative has-icon-left col-2 m-0">' +
-      ' <button type="button" class="btn btn-primary emt_send">' +
-      ' <i class="fa fa-paper-plane-o d-lg-none"></i>' +
-      ' <span id="emt_send" class="d-none d-lg-block"> <i class="fa fa-comments"></i> Send</span>' +
-      ' </button>' +
-      '</fieldset>' +
-      '</form>' +
-      '                  </section> ' +
-      '                    </div> ' +
-      '                    </div> ' +
-      '                    </div> ';
-    console.log(setChat);
-    // THIS IS HORRIBLE I KNOW BUT IT IS FOR DEV PURPOSES SO WE CAN ISOLATE THE CHAT AND HAVE THE PROCESS FUNCTIONALITY WORK
-    var chatCont = $('<div>');
-    chatCont.addClass('col-12 py-4 px-3 card mb-4');
-    console.log(chatCont);
-    var chatTitle = $('<h5>');
-    chatTitle.addClass('card-header emrGnC text-white text-center');
-    var icon = $('<i>');
-    icon.addClass('fa fa-heartbeat');
-    chatTitle.append(icon);
-    chatTitle.append('&nbsp;Emergency Chat');
-    console.log(chatTitle);
-    var fireChat = $('<div id="fireChat">');
-    fireChat.addClass('card-body');
-    console.log(fireChat);
-    chatCont.append(chatTitle);
-    fireChat.append(setChat);
-    chatCont.append(fireChat);
-    
-    $('#dynSt').html(chatCont);
-    console.log( $('#chat'));
-    //$('#chat').html(chatCont);
-  }
-  
-  function chatInit(){
-    $('#chat').html(' ');
+// function setChat() {
+//   $('#dynSt').html(' ');
+//   console.log(setChat);
+//   // THIS IS HORRIBLE I KNOW BUT IT IS FOR DEV PURPOSES SO WE CAN ISOLATE THE CHAT AND HAVE THE PROCESS FUNCTIONALITY WORK
+//   var chatCont = $('<div>');
+//   chatCont.addClass('col-12 py-4 px-3 card mb-4');
+//   console.log(chatCont);
+//   var chatTitle = $('<h5>');
+//   chatTitle.addClass('card-header emrGnC text-white text-center');
+//   var icon = $('<i>');
+//   icon.addClass('fa fa-heartbeat');
+//   chatTitle.append(icon);
+//   chatTitle.append('&nbsp;Emergency Chat');
+//   console.log(chatTitle);
+//   var fireChat = $('<div id="fireChat">');
+//   fireChat.addClass('card-body');
+//   console.log(fireChat);
+//   chatCont.append(chatTitle);
+//   fireChat.append(setChat);
+//   chatCont.append(fireChat);
+
+//   $('#dynSt').html(chatCont);
+//   console.log($('#chat'));
+//   //$('#chat').html(chatCont);
+// }
+
+function chatInit() {
+  $('#chat').html(' ');
+
   //Create DOM Elements
-  //chat body
+  //Chat Container Elements
   var chatCont = $('<div>').addClass('col-12 py-4 px-3 card mb-4');
   var chatTitle = $('<h5>').addClass('card-header emrGnC text-white  fucking text-center');
   var icon = $('<i>').addClass('fa fa-heartbeat');
-  var fireChat = $('<div id="fireChat">').addClass('card-body');
+  var fireChat = $('<div id="fireChat">').addClass('card-body pt-5 px-5');
   var chatBdy = $('<div>').addClass('content-body');
   var chatSect = $('<section>').addClass('chat-app-window');
+  var chats = $('<div id="chtBdy">').addClass('chats px-5');
 
-  //Send Form 
-  var sndSect = $('<section>').addClass('chat-app-form');
+  var alert = $('<div>');
+    alert.addClass('alert alert-warning');
+    alert.attr('role', 'alert');
+    console.log(alert);
+    alert.text('type something');
+    chats.append(alert);
+
+  //Send Form Elements
+  var sndSect = $('<section>').addClass('chat-app-form mt-4');
   var sndFrm = $('<form>').addClass('chat-app-input d-flex');
-  //I had to create the fieldset like this it was not working the other way. 
-  var fldSet1 = document.createElement("FIELDSET");
-  fldSet1.classList.add("fldSet1","form-group", "position-relative", "has-icon-left", "col-10", "m-0");
- // this is a hack just to get it done I need more time on it
-  var testCont = $('#testCont');
-  testCont.html(fldSet1);
-  var fld1node = $('.fldSet1');
-  var sndIpt1 =  $('<input id="iconLeft4">').addClass('form-control emt_chat').attr('placeholder','Type your message').attr('type','text');
-  fld1node.append(sndIpt1);
-  var fld2node = $('<fieldset>').addClass('form-group position-relative has-icon-left col-2 m-0');
- // sndSect.html(sndFrm).html(fld1node).html(sndIpt);
-  var sndIpt2 =  $('<button>').addClass('btn btn-primary emt_send').attr('placeholder','Type your message').attr('type','button');
+  var fld1node = $('<fieldset>').addClass('form-group position-relative has-icon-left col-10 m-0');
+  var fld2node = $('<fieldset>').addClass('d-flex justify-content-center form-group position-relative has-icon-left col-2 m-0');
+  var sndIpt1 = $('<input id="chatMsg">').addClass('form-control emt_chat').attr('placeholder', 'Type your message').attr('type', 'text');
+  var sndIpt2 = $('<button>').addClass('btn btn-primary emt_send').attr('placeholder', 'Type your message').attr('type', 'button');
   var iconPln = $('<i>').addClass('fa fa-paper-plane-o d-lg-none');
   var iconCmt = $('<i>').addClass('fa fa-comments');
-  var span = $('<span id="emt_send">').addClass('d-none d-lg-block"');
-  sndIpt2.append(iconPln);
-  span.html(iconCmt).text('Send');
-  sndIpt2.append(span);
-fld2node.append(sndIpt2);
-    // ' <span class="> <i class=""></i> Send</span>' +
-    // ' </button>' +
-    // '</fieldset>' +
-    // '</form>' +
-    // '                  </section> ';
- // var chatSnd = $('<section>').addClass('chat-app-form');
-//  var sndFrm = $('<form>').addClass('chat-app-input d-flex');
-  
+  var span = $('<span id="emt_send">').addClass('d-none d-lg-block');
+
   //Append Created Elements to DOM
-chatSect.append(sndSect).html(fld1node).append(fld2node);
+  fld1node.append(sndIpt1);
+  sndIpt2.append(iconPln);
+  span.html(iconCmt).append('&nbsp;Send');
+  sndIpt2.append(span);
+  fld2node.append(sndIpt2);
+  sndFrm.append(fld1node).append(fld2node);
+  sndSect.append(sndFrm);
+  chatSect.html(chats);
+  chatSect.append(sndSect);
   chatTitle.append(icon).append('&nbsp;Emergency Chat');
   fireChat.append(chatBdy).html(chatSect);
-  chatCont.append(chatTitle).append(fireChat);  
-  console.log(fireChat);
-  
-  //fireChat.append(setChat);
-  //$('#chat').html(' ');
+  chatCont.append(chatTitle).append(fireChat);
+
   $('#chat').html(chatCont);
-    
-  }
+
+}
