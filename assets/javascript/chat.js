@@ -26,6 +26,7 @@ $(document).ready(function () {
 
 
 function rChat(rMsg) {
+  var rName = "Roberto";
   var d = new Date();
   var date = d.toLocaleString([], {
     hour12: true
@@ -45,14 +46,21 @@ function rChat(rMsg) {
   rvTr.append(rvTrA);
   rIn.append(rvTr);
   rIn.append(rezMz);
-
   chtBdy.append(rIn);
   //chtBdy.append(time);
   //rIn.append(time);
-  
+  database.ref('chat/chatResqr').push({
+    emt_name: rName,
+    text_input: rMsg,
+    //dateAdded: firebase.database.ServerValue.TIMESTAMP
+  }, function (errorObject) {
+    console.log("The read failed: " + errorObject.code);
+  });
+
 }
   // this creates the ride side chat styling. 
 function eChat(eMsg) {
+  var eName = "Avi";
   var d = new Date();
   var date = d.toLocaleString([], {
     hour12: true
@@ -70,11 +78,16 @@ function eChat(eMsg) {
   rvTr.append(rvTrA);
   rIn.append(rvTr);
   rIn.append(rezMz);
-
   chtBdy.append(rIn);
   chtBdy.append(time);
   //rIn.append(time);
-  
+  database.ref('chat/chatResqe').push({
+    emt_name: eName,
+    text_input: eMsg,
+    //dateAdded: firebase.database.ServerValue.TIMESTAMP
+  }, function (errorObject) {
+    console.log("The read failed: " + errorObject.code);
+  });
 }
 
 
@@ -140,31 +153,6 @@ function user_fireChat() {
 }
 
 
-// function setChat() {
-//   $('#dynSt').html(' ');
-//   console.log(setChat);
-//   // THIS IS HORRIBLE I KNOW BUT IT IS FOR DEV PURPOSES SO WE CAN ISOLATE THE CHAT AND HAVE THE PROCESS FUNCTIONALITY WORK
-//   var chatCont = $('<div>');
-//   chatCont.addClass('col-12 py-4 px-3 card mb-4');
-//   console.log(chatCont);
-//   var chatTitle = $('<h5>');
-//   chatTitle.addClass('card-header emrGnC text-white text-center');
-//   var icon = $('<i>');
-//   icon.addClass('fa fa-heartbeat');
-//   chatTitle.append(icon);
-//   chatTitle.append('&nbsp;Emergency Chat');
-//   console.log(chatTitle);
-//   var fireChat = $('<div id="fireChat">');
-//   fireChat.addClass('card-body');
-//   console.log(fireChat);
-//   chatCont.append(chatTitle);
-//   fireChat.append(setChat);
-//   chatCont.append(fireChat);
-
-//   $('#dynSt').html(chatCont);
-//   console.log($('#chat'));
-//   //$('#chat').html(chatCont);
-// }
 
 function chatInit() {
   $('#chat').html(' ');
