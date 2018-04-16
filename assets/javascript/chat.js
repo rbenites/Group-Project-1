@@ -39,7 +39,7 @@ function rChat(rMsg) {
   var rvTrA = $('<a>').addClass('avatar').attr('data-toggle', 'tooltip').attr('href', '#');
   var rvTrM = $('<img>').attr('src', 'assets/img/avatar-s-1.png');
   // the time needs to have more logic behind it. 
- // var time = $('<p>').addClass('time').text(date);
+  // var time = $('<p>').addClass('time').text(date);
   var rezMz = $('<div>').addClass('chat-body').append($('<div>').addClass('chat-content emt_chat_content').text(rMsg)); // rMsg in this function is your input for variable you can get and set in firebase
 
   rvTrA.append(rvTrM);
@@ -58,7 +58,7 @@ function rChat(rMsg) {
   });
 
 }
-  // this creates the ride side chat styling. 
+// this creates the ride side chat styling. 
 function eChat(eMsg) {
   var eName = "Avi";
   var d = new Date();
@@ -168,11 +168,11 @@ function chatInit() {
   var chats = $('<div id="chtBdy">').addClass('chats px-5');
 
   var alert = $('<div>');
-    alert.addClass('alert alert-warning');
-    alert.attr('role', 'alert');
-    console.log(alert);
-    alert.text('type something');
-    chats.append(alert);
+  alert.addClass('alert alert-warning');
+  alert.attr('role', 'alert');
+  console.log(alert);
+  alert.text('type something');
+  chats.append(alert);
 
   //Send Form Elements
   var sndSect = $('<section>').addClass('chat-app-form mt-4');
