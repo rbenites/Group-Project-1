@@ -35,20 +35,9 @@ var lon = "";
 /* Start the JS setup with document.ready*/
 $(document).ready(function () {
 
-  if (window.location != "file:///Users/briandawkins/Documents/code/Group-Project-1/resqr-dash.html"
-  ) {
-    getLoc();
-  }
-  // This is here for testing. 
-  var testLat;
-  var testLon;
   jsSetup();
   // Initialize tooltip component
-  $("#report-submit").on("click", function () {
-    console.log(testLat);
-    console.log(testLon);
-  });
-  console.log(window.location);
+
 });
 
 $("body").on("click", '.dr', function (e) {
@@ -87,8 +76,6 @@ $("body").on("click", '.vw', function (e) {
 
 function getDirections() {
 
-  var userLat = '';
-  var userLon = '';
   var rezQrlat = '';
   var rezQrlon = '';
 
@@ -104,70 +91,20 @@ function getDirections() {
       rezQrlon = -118.3804;
 
       database.ref('/userCases').on("child_added", function (snapshot) {
-        userLat = snapshot.val().userLat;
-        userLon = snapshot.val().userLon;
+        userAddress = snapshot.val().address;
       });
 
       var dirEmbed = $("<iframe>");
-      dirEmbed.attr("src", "https://www.google.com/maps/embed/v1/directions?key=" + gMapsAPIKey + "&origin=" + rezQrlat + ',' + rezQrlon + "&destination=" + userLat + ',' + userLon);
+      dirEmbed.attr("src", "https://www.google.com/maps/embed/v1/directions?key=" + gMapsAPIKey + "&origin=" + rezQrlat + ',' + rezQrlon + "&destination=" + userAddress);
       dirEmbed.attr("width", "50%");
       dirEmbed.attr("height", "450");
       dirEmbed.attr("frameborder", "0");
       dirEmbed.attr("style", "border:0");
       dirEmbed.addClass("mt-4");
       $("#get-directions").html(dirEmbed);
-
-      // console.log("Rescuer lat: " + rezQrlat);
-      // console.log("Rescuer lon: " + rezQrlon);
-      console.log("User lat: " + userLat);
-      console.log("User lon: " + userLon);
     });
   });
 }
-
-
-function getLoc() {
-  var id, target, options;
-
-  function success(pos) {
-
-    var crd = pos.coords;
-
-    if (target.latitude === crd.latitude && target.longitude === crd.longitude) {
-      console.log('Congratulations, you reached the target');
-      navigator.geolocation.clearWatch(id);
-    }
-
-    lat = crd.latitude;
-    lon = crd.longitude;
-    return [lat, lon];
-
-  }
-
-  function error(err) {
-    console.warn('ERROR(' + err.code + '): ' + err.message);
-  }
-
-  target = {
-    latitude: 34.0753,
-    longitude: -118.3804
-  };
-
-  options = {
-    enableHighAccuracy: false,
-    timeout: 25000,
-    maximumAge: 60000
-  };
-
-  id = navigator.geolocation.watchPosition(success, error, options);
-
-  // lat = crd.latitude;
-  // console.log(lat);
-  // lon = crd.longitude;
-  // console.log(lon);
-}
-
-
 
 function getFire() {
   // this grabs my specific nested object called /userCases. I stringify the response and use the index to generate the the data I need in my table. 
@@ -260,6 +197,7 @@ function processForm() {
     aller = $("#allergies").val().trim();
     medical = $("#mdclCond").val().trim();
     complaint = $("#inputComplaint").val().trim();
+    address= $("#inputAddress").val().trim();
 
     /* This code pushes the form info to Firebase DB*/
     database.ref('/userCases').push({
@@ -273,8 +211,7 @@ function processForm() {
       allergies: aller,
       medical: medical,
       complaint: complaint,
-      userLat: lat,
-      userLon: lon
+      address: address
     }, function (errorObject) {
       console.log("The read failed: " + errorObject.code);
     });
