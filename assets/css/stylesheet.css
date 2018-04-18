@@ -48,11 +48,15 @@ a {
 .action {
     display: flex;
 }
+#secSte .map-responsive {
+    height:300px !important;
+
+}
 .map-responsive{
     overflow:hidden;
     padding-bottom:25%;
     position:relative;
-    height:1000px;
+    height:1000px !important;
 }
 .map-responsive iframe{
     left:0;
@@ -63,7 +67,7 @@ a {
 }
 
 
-/*Extra small devices (portrait phones, less than 575px)*/
+/*Extra small devices (portrait phones, less than 575px)
 
 @media (max-width: 767px) {
     .map-responsive{
@@ -72,3 +76,6 @@ a {
 #map {
     margin-right: inherit  !important;}
 }
+#resQ .map-responsive {
+    height: 300px;
+}*/

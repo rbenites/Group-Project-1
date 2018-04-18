@@ -1,133 +1,61 @@
 /* Start the JS setup with document.ready*/
-$(document).ready(function () {
+var d = ' ';
 
-  console.log(document.title);
+$(document).ready(function () {
+  var inComp = $('#inputComplaint');
   chatInit();
-  fireGet();
-  // I commented  your function calls  bec I eded to set it up for you. You can now go back through your code and send them through to two functions I created for you.  
-  //  rChat(chtMsg);  ~ rescuer function 
-  //  eChat(chtMsg);  ~ person in trouble function 
 
   $('.emt_send').on('click', function (e) {
     e.preventDefault();
     var chtMsg = $('#chatMsg').val().trim();
-    $('.alert').addClass('d-none');
-    fireGet(chtMsg);
-    console.log(chtMsg);
+    fireSet(chtMsg);
   });
 });
 
-
-function rChat(rMsg) {
-  var rName = "Roberto";
-  var d = new Date();
-  var date = d.toLocaleString([], {
-    hour12: true
-  });
-
-  var chtBdy = $('#chtBdy');
-  // this creates the left side chat styling. 
-  var rIn = $('<div>').addClass('chat');
-  var rvTr = $('<div>').addClass('chat-avatar reZQr');
-  var rvTrA = $('<a>').addClass('avatar').attr('data-toggle', 'tooltip').attr('href', '#');
-  var rvTrM = $('<img>').attr('src', 'assets/img/avatar-s-1.png');
-  // the time needs to have more logic behind it. 
-  // var time = $('<p>').addClass('time').text(date);
-  var rezMz = $('<div>').addClass('chat-body').append($('<div>').addClass('chat-content emt_chat_content').text(rMsg)); // rMsg in this function is your input for variable you can get and set in firebase
-
-  rvTrA.append(rvTrM);
-  rvTr.append(rvTrA);
-  rIn.append(rvTr);
-  rIn.append(rezMz);
-  chtBdy.append(rIn);
-
-}
-
-
-function fireGet(chtMsg) {
-  console.log(chtMsg);
-  var chatResqr = 'chatResqr';
-  var chatResqe = 'chatResqe';
-  var chsnChat = '';
-  database = firebase.database();
+function fireSet(chtMsg) {
   if (document.title === 'RezQr Dashboard') {
-    alert('hey hey R');
-    chsnChat = chatResqr;
-    var ref = database.ref('chat/' + chsnChat);
-    ref.on("value", function (snapshot) {
-      var chtDta = snapshot.val();
-      console.log(chtDta);
-      var keys = Object.keys(chtDta);
-      console.log(keys);
-      for (var x = 0; x < keys.length; x++) {
-        var k = keys[x];
-        // console.log(chtDta[k].text_input);
-        console.log(chtDta[k].text_input);
-        rChat(chtDta[k].text_input);
-      }
+    var myDataRef = firebase.database().ref('chat/chatResqr');
+    var rName = "Roberto";
+    d = new Date();
+    var date = d.toLocaleString([], {
+      hour12: true
+    });
+    myDataRef.push({
+      emt_name: rName,
+      text_input: chtMsg,
+      date_stamp: date,
+      //dateAdded: firebase.database.ServerValue.TIMESTAMP
+    }, function (errorObject) {
+      console.log("The read failed: " + errorObject.code);
     });
 
+    myDataRef.once("child_added", function (snapshot) {
+      var message = snapshot.val();
+      rChat(message.text_input);
+    });
   } else {
-    var chsnChat = chatResqe;
-    var ref = database.ref('chat/' + chsnChat);
-    ref.on("value", function (snapshot) {
-      var chtDta = snapshot.val();
-      console.log(chtDta);
-      var keys = Object.keys(chtDta);
-      console.log(keys);
-      for (var x = 0; x < keys.length; x++) {
-        var k = keys[x];
-        // console.log(chtDta[k].text_input);
-        console.log(chtDta[k].text_input);
-        eChat(chtDta[k].text_input);
-
-      }
+    var myDataRef = firebase.database().ref('chat/chatResqe');
+    var eName = "Avi";
+    d = new Date();
+    var date = d.toLocaleString([], {
+      hour12: true
     });
-
+    myDataRef.push({
+      emt_name: eName,
+      text_input: chtMsg,
+      date_stamp: date,
+    }, function (errorObject) {
+      console.log("The read failed: " + errorObject.code);
+    });
+    myDataRef.once("child_added", function (snapshot) {
+      var message = snapshot.val();
+      eChat(message.text_input);
+    });
   }
-
-
 }
 
-function fireLoad(){
-  var chatResqr = 'chatResqr';
-  var chsnChat = '';
-  database = firebase.database();
-    chsnChat = chatResqr;
-    var ref = database.ref('chat/' + chsnChat);
-    ref.on("value", function (snapshot) {
-      var chtDta = snapshot.val();
-      console.log(chtDta);
-      var keys = Object.keys(chtDta);
-      console.log(keys);
-      for (var x = 0; x < keys.length; x++) {
-        var k = keys[x];
-        // console.log(chtDta[k].text_input);
-        console.log(chtDta[k].text_input);
-        rChat(chtDta[k].text_input);
-      }
-    });
-
-    var chatResqe = 'chatResqe';
-    var chsnChat = chatResqe;
-    var ref = database.ref('chat/' + chsnChat);
-    ref.on("value", function (snapshot) {
-      var chtDta = snapshot.val();
-      console.log(chtDta);
-      var keys = Object.keys(chtDta);
-      console.log(keys);
-      for (var x = 0; x < keys.length; x++) {
-        var k = keys[x];
-        // console.log(chtDta[k].text_input);
-        console.log(chtDta[k].text_input);
-        eChat(chtDta[k].text_input);
-      }
-    });
-  }
 // this creates the ride side chat styling. 
 function eChat(eMsg) {
-  var eName = "Avi";
-  var d = new Date();
   var date = d.toLocaleString([], {
     hour12: true
   });
@@ -150,6 +78,61 @@ function eChat(eMsg) {
 }
 
 
+function rChat(rMsg) {
+
+  var chtBdy = $('#chtBdy');
+  // this creates the left side chat styling. 
+  var rIn = $('<div>').addClass('chat');
+  var rvTr = $('<div>').addClass('chat-avatar reZQr');
+  var rvTrA = $('<a>').addClass('avatar').attr('data-toggle', 'tooltip').attr('href', '#');
+  var rvTrM = $('<img>').attr('src', 'assets/img/avatar-s-1.png');
+  // the time needs to have more logic behind it. 
+  // var time = $('<p>').addClass('time').text(date);
+  var rezMz = $('<div>').addClass('chat-body').append($('<div>').addClass('chat-content emt_chat_content').text(rMsg)); // rMsg in this function is your input for variable you can get and set in firebase
+
+  rvTrA.append(rvTrM);
+  rvTr.append(rvTrA);
+  rIn.append(rvTr);
+  rIn.append(rezMz);
+  chtBdy.append(rIn);
+}
+
+function fireLoad() {
+  $('.alert').addClass('d-none ');
+  
+  var chatResqr = 'chatResqr';
+  var chsnChat = '';
+  database = firebase.database();
+  chsnChat = chatResqr;
+  var ref = database.ref('chat/' + chsnChat);
+
+  ref.once("value", function (snapshot) {
+    var chtDta = snapshot.val();
+    var keys = Object.keys(chtDta);
+    for (var x = 0; x < keys.length; x++) {
+      var k = keys[x];
+      rChat(chtDta[k].text_input);
+    }
+  });
+
+
+
+  var chatResqe = 'chatResqe';
+  var chsnChat = chatResqe;
+  var ref = database.ref('chat/' + chsnChat);
+  ref.once("value", function (snapshot) {
+    var chtDta = snapshot.val();
+    var keys = Object.keys(chtDta);
+    for (var x = 0; x < keys.length; x++) {
+      var k = keys[x];
+      eChat(chtDta[k].text_input);
+    }
+  });
+
+
+
+}
+
 function chatInit() {
   $('#chat').html(' ');
   //Create DOM Elements
@@ -165,7 +148,6 @@ function chatInit() {
   var alert = $('<div>');
   alert.addClass('alert alert-warning');
   alert.attr('role', 'alert');
-  console.log(alert);
   alert.text('type something');
   chats.append(alert);
 
@@ -196,4 +178,5 @@ function chatInit() {
 
   $('#chat').html(chatCont);
   fireLoad();
+
 }
