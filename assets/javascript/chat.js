@@ -8,18 +8,14 @@ $(document).ready(function () {
   //  rChat(chtMsg);  ~ rescuer function 
   //  eChat(chtMsg);  ~ person in trouble function 
 
-
   $('.emt_send').on('click', function (e) {
     e.preventDefault();
     var chtMsg = $('#chatMsg').val().trim();
     $('.alert').addClass('d-none');
     fireGet(chtMsg);
-   console.log(chtMsg);
+    console.log(chtMsg);
   });
-  //  user_fireChat();
-  //  emt_fireChat();
 });
-
 
 
 function rChat(rMsg) {
@@ -49,15 +45,14 @@ function rChat(rMsg) {
 
 
 function fireGet(chtMsg) {
-console.log(chtMsg);
+  console.log(chtMsg);
   var chatResqr = 'chatResqr';
   var chatResqe = 'chatResqe';
   var chsnChat = '';
   database = firebase.database();
-
   if (document.title === 'RezQr Dashboard') {
     alert('hey hey R');
-    var chsnChat = chatResqr;
+    chsnChat = chatResqr;
     var ref = database.ref('chat/' + chsnChat);
     ref.on("value", function (snapshot) {
       var chtDta = snapshot.val();
@@ -69,12 +64,11 @@ console.log(chtMsg);
         // console.log(chtDta[k].text_input);
         console.log(chtDta[k].text_input);
         rChat(chtDta[k].text_input);
-
       }
     });
 
   } else {
-   var chsnChat = chatResqe;
+    var chsnChat = chatResqe;
     var ref = database.ref('chat/' + chsnChat);
     ref.on("value", function (snapshot) {
       var chtDta = snapshot.val();
@@ -95,16 +89,41 @@ console.log(chtMsg);
 
 }
 
+function fireLoad(){
+  var chatResqr = 'chatResqr';
+  var chsnChat = '';
+  database = firebase.database();
+    chsnChat = chatResqr;
+    var ref = database.ref('chat/' + chsnChat);
+    ref.on("value", function (snapshot) {
+      var chtDta = snapshot.val();
+      console.log(chtDta);
+      var keys = Object.keys(chtDta);
+      console.log(keys);
+      for (var x = 0; x < keys.length; x++) {
+        var k = keys[x];
+        // console.log(chtDta[k].text_input);
+        console.log(chtDta[k].text_input);
+        rChat(chtDta[k].text_input);
+      }
+    });
 
-
-
-
-
-
-
-
-
-
+    var chatResqe = 'chatResqe';
+    var chsnChat = chatResqe;
+    var ref = database.ref('chat/' + chsnChat);
+    ref.on("value", function (snapshot) {
+      var chtDta = snapshot.val();
+      console.log(chtDta);
+      var keys = Object.keys(chtDta);
+      console.log(keys);
+      for (var x = 0; x < keys.length; x++) {
+        var k = keys[x];
+        // console.log(chtDta[k].text_input);
+        console.log(chtDta[k].text_input);
+        eChat(chtDta[k].text_input);
+      }
+    });
+  }
 // this creates the ride side chat styling. 
 function eChat(eMsg) {
   var eName = "Avi";
@@ -112,9 +131,6 @@ function eChat(eMsg) {
   var date = d.toLocaleString([], {
     hour12: true
   });
-
-
-
 
   var chtBdy = $('#chtBdy');
   var rIn = $('<div>').addClass('chat  chat-left');
@@ -131,77 +147,11 @@ function eChat(eMsg) {
   chtBdy.append(rIn);
   chtBdy.append(time);
   //rIn.append(time);
-
 }
-
-
-
-
-function emt_fireChat() {
-  var emt_name = "EMT";
-  var text_input = "";
-  //on button click to send user name and text message
-  $(".emt_send").on("click", function (event) {
-    event.preventDefault();
-
-    //get the date in the field
-    var text_input = $('.emt_chat').val().trim();
-    //code for handling the push to firebase
-    database.ref('/chatResqr').push({
-      emt_name: emt_name,
-      text_input: text_input,
-      //dateAdded: firebase.database.ServerValue.TIMESTAMP
-    }, function (errorObject) {
-      console.log("The read failed: " + errorObject.code);
-    });
-    //console.log(user_in_emergency);
-    console.log(text_input);
-  });
-  database.ref('/chatResqr').on("child_added", function (childSnapshot) {
-    $(".emt_name").append(childSnapshot.val().emt_name);
-    $(".emt_chat_content").append("<p>" + childSnapshot.val().text_input);
-    $(".emt_chat").val("");
-  }, function (errorObject) {
-    console.log("The read failed: " + errorObject.code);
-  });
-}
-
-
-function user_fireChat() {
-  var user_in_emergency = "";
-  var text_input = "";
-  //on button click to send user name and text message
-  $(".user_send").on("click", function (event) {
-    event.preventDefault();
-
-    //get the date in the field
-    var user_in_emergency = $('#inputName').val().trim();
-    var text_input = $('.user_chat').val().trim();
-    //code for handling the push to firebase
-    database.ref('/chatResqe').push({
-      user_in_emergency: user_in_emergency,
-      text_input: text_input,
-      //dateAdded: firebase.database.ServerValue.TIMESTAMP
-    }, function (errorObject) {
-      console.log("The read failed: " + errorObject.code);
-    });
-    console.log(user_in_emergency);
-    console.log(text_input);
-  });
-  database.ref('/chatResqe').on("child_added", function (childSnapshot) {
-    $(".user_in_emergency").append(childSnapshot.val().user_in_emergency);
-    $(".user_chat_content").append("<p>" + childSnapshot.val().text_input);
-    $(".user_chat").val("");
-  }, function (errorObject) {
-    console.log("The read failed: " + errorObject.code);
-  });
-}
-
 
 
 function chatInit() {
   $('#chat').html(' ');
-
   //Create DOM Elements
   //Chat Container Elements
   var chatCont = $('<div>').addClass('col-12 py-4 px-3 card mb-4');
@@ -245,5 +195,5 @@ function chatInit() {
   chatCont.append(chatTitle).append(fireChat);
 
   $('#chat').html(chatCont);
-
+  fireLoad();
 }

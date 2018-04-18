@@ -27,12 +27,15 @@ $(document).ready(function () {
 
      // google maps api
      // the google maps api also takes the city name from the wunderground api
+     var mpCont = $('<div>').addClass('map-responsive mb-5');
      var mapsEmbed = $("<iframe>");
      mapsEmbed.attr("src", "https://www.google.com/maps/embed/v1/search?key=AIzaSyCF_5x7AkAOH8T7ijrquPSF5Lo3dullSiA&q=" + cityName);
      mapsEmbed.attr("width", "600");
      mapsEmbed.attr("height", "750");
      mapsEmbed.attr("frameborder", "0");
      mapsEmbed.attr("style", "border:0");
-     $("#map").html(mapsEmbed);
+     mpCont.append(mapsEmbed);
+     $("#map").html(mpCont);
    });
 });
+

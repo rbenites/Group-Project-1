@@ -115,7 +115,7 @@ function getDirections() {
       // database.ref('/userCases').on("child_added", function (snapshot) {
       //   userAddress = snapshot.val().address;
       // });
-
+      var mpCont = $('<div>').addClass('map-responsive mb-5');
       var dirEmbed = $("<iframe>"); 
       dirEmbed.attr("src", "https://www.google.com/maps/embed/v1/directions?key=" + gMapsAPIKey + "&origin=" + rezQrlat + ',' + rezQrlon + "&destination=" + userAddress);
       dirEmbed.attr("width", "50%");
@@ -123,7 +123,8 @@ function getDirections() {
       dirEmbed.attr("frameborder", "0");
       dirEmbed.attr("style", "border:0");
       dirEmbed.addClass("mt-4");
-      $("#get-directions").html(dirEmbed);
+      mpCont.append(dirEmbed);
+      $("#get-directions").html(mpCont);
     });
   }
 }
@@ -252,7 +253,7 @@ function processForm() {
       secSte.removeClass('d-none').addClass('d-block');
 
       // 	chatIamge.attr('src', 'img/chat_2.png');
-    }, 5000);
+    }, 3000);
     setTimeout(() => {
       setChat();
     }, 10000);

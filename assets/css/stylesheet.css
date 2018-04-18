@@ -11,10 +11,15 @@
 
 -------------------------------------------------------------------*/
 
+
+
+
 /*----------------------------------------------------------------
 1. GLOBAL 
 -------------------------------------------------------------------*/
 
+#map {
+    margin-right: -17px !important;}
 a {
     color: #17a2b8;
 }
@@ -47,7 +52,7 @@ a {
     overflow:hidden;
     padding-bottom:25%;
     position:relative;
-    height:0;
+    height:1000px;
 }
 .map-responsive iframe{
     left:0;
@@ -55,4 +60,15 @@ a {
     height:100%;
     width:100%;
     position:absolute;
+}
+
+
+/*Extra small devices (portrait phones, less than 575px)*/
+
+@media (max-width: 767px) {
+    .map-responsive{
+    min-height:600px ;
+}
+#map {
+    margin-right: inherit  !important;}
 }
