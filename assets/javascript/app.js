@@ -1,3 +1,5 @@
+/* jshint esversion: 6 */
+
 /*:::::::: FireBase Connect :::::::::*/
 var config = {
   apiKey: "AIzaSyD55v0OO7fbqD_SZqP0D4bw-2DrC5GUpDQ",
@@ -29,26 +31,15 @@ var medical = '';
 var complaint = '';
 var d = new Date();
 var gMapsAPIKey = 'AIzaSyCF_5x7AkAOH8T7ijrquPSF5Lo3dullSiA';
-var lat = "";
-var lon = "";
+var address = '';
+var userAddress = '';
 
 /* Start the JS setup with document.ready*/
 $(document).ready(function () {
 
-  if (window.location != "file:///Users/briandawkins/Documents/code/Group-Project-1/resqr-dash.html"
-  ) {
-    getLoc();
-  }
-  // This is here for testing. 
-  var testLat;
-  var testLon;
   jsSetup();
   // Initialize tooltip component
-  $("#report-submit").on("click", function () {
-    console.log(testLat);
-    console.log(testLon);
-  });
-  console.log(window.location);
+
 });
 
 $("body").on("click", '.dr', function (e) {
@@ -72,17 +63,24 @@ $("body").on("click", '.vw', function (e) {
   database = firebase.database();
   var ref = database.ref('/userCases');
   ref.on("value", function (snapshot) {
-  var csDta = snapshot.val();
-  $("#person").html(csDta[key].name);
-  $("#patient").html(csDta[key].person);
-  $("#number").html(csDta[key].number);
-  $("#medicalLoc").html(csDta[key].loc);
-  $("#medicalAllergic").html(csDta[key].allergies);
-  $("#medicalHistory").html(csDta[key].medical);
-  $("#chief-complaint").html(csDta[key].complaint);
-  $("#activeCaseView").html("Active Case: " + csDta[key].age + " y/o" + " & gender: " + csDta[key].gender);
-  $("#mark-completed").attr("data-key", k);
-})
+
+    var csDta = snapshot.val();
+    $("#person").html(csDta[key].name);
+    $("#patient").html(csDta[key].person);
+    $("#number").html(csDta[key].number);
+    $("#medicalLoc").html(csDta[key].loc);
+    $("#medicalAllergic").html(csDta[key].allergies);
+    $("#medicalHistory").html(csDta[key].medical);
+    $("#chief-complaint").html(csDta[key].complaint);
+    $("#activeCaseView").html("Active Case: " + csDta[key].age + " y/o" + " & gender: " + csDta[key].gender);
+      $("#mark-completed").attr("data-key", k);
+    userAddress = csDta[key].address;
+  });
+
+
+  console.log(userAddress);
+});
+
 
 
 $("#mark-completed").on("click", function(){
@@ -103,8 +101,6 @@ $("#mark-completed").on("click", function(){
 });
 function getDirections() {
 
-  var userLat = '';
-  var userLon = '';
   var rezQrlat = '';
   var rezQrlon = '';
 
@@ -119,71 +115,21 @@ function getDirections() {
       rezQrlat = 34.0753;
       rezQrlon = -118.3804;
 
-      database.ref('/userCases').on("child_added", function (snapshot) {
-        userLat = snapshot.val().userLat;
-        userLon = snapshot.val().userLon;
-      });
+      // database.ref('/userCases').on("child_added", function (snapshot) {
+      //   userAddress = snapshot.val().address;
+      // });
 
       var dirEmbed = $("<iframe>");
-      dirEmbed.attr("src", "https://www.google.com/maps/embed/v1/directions?key=" + gMapsAPIKey + "&origin=" + rezQrlat + ',' + rezQrlon + "&destination=" + userLat + ',' + userLon);
+      dirEmbed.attr("src", "https://www.google.com/maps/embed/v1/directions?key=" + gMapsAPIKey + "&origin=" + rezQrlat + ',' + rezQrlon + "&destination=" + userAddress);
       dirEmbed.attr("width", "50%");
       dirEmbed.attr("height", "450");
       dirEmbed.attr("frameborder", "0");
       dirEmbed.attr("style", "border:0");
       dirEmbed.addClass("mt-4");
       $("#get-directions").html(dirEmbed);
-
-      // console.log("Rescuer lat: " + rezQrlat);
-      // console.log("Rescuer lon: " + rezQrlon);
-      console.log("User lat: " + userLat);
-      console.log("User lon: " + userLon);
     });
   });
 }
-
-
-function getLoc() {
-  var id, target, options;
-
-  function success(pos) {
-
-    var crd = pos.coords;
-
-    if (target.latitude === crd.latitude && target.longitude === crd.longitude) {
-      console.log('Congratulations, you reached the target');
-      navigator.geolocation.clearWatch(id);
-    }
-
-    lat = crd.latitude;
-    lon = crd.longitude;
-    return [lat, lon];
-
-  }
-
-  function error(err) {
-    console.warn('ERROR(' + err.code + '): ' + err.message);
-  }
-
-  target = {
-    latitude: 34.0753,
-    longitude: -118.3804
-  };
-
-  options = {
-    enableHighAccuracy: false,
-    timeout: 25000,
-    maximumAge: 60000
-  };
-
-  id = navigator.geolocation.watchPosition(success, error, options);
-
-  // lat = crd.latitude;
-  // console.log(lat);
-  // lon = crd.longitude;
-  // console.log(lon);
-}
-
-
 
 function getFire() {
   // this grabs my specific nested object called /userCases. I stringify the response and use the index to generate the the data I need in my table. 
@@ -276,6 +222,7 @@ function processForm() {
     aller = $("#allergies").val().trim();
     medical = $("#mdclCond").val().trim();
     complaint = $("#inputComplaint").val().trim();
+    address = $("#inputAddress").val().trim();
 
     /* This code pushes the form info to Firebase DB*/
     database.ref('/userCases').push({
@@ -289,8 +236,7 @@ function processForm() {
       allergies: aller,
       medical: medical,
       complaint: complaint,
-      userLat: lat,
-      userLon: lon
+      address: address
     }, function (errorObject) {
       console.log("The read failed: " + errorObject.code);
     });
@@ -339,6 +285,6 @@ function jsSetup() {
   results();
   getFire();
   getDirections();
- 
+
 
 }
