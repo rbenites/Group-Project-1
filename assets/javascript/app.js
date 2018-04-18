@@ -81,10 +81,26 @@ $("body").on("click", '.vw', function (e) {
   $("#medicalHistory").html(csDta[key].medical);
   $("#chief-complaint").html(csDta[key].complaint);
   $("#activeCaseView").html("Active Case: " + csDta[key].age + " y/o" + " & gender: " + csDta[key].gender);
-  })
+  $("#mark-completed").attr("data-key", k);
+})
+
+
+$("#mark-completed").on("click", function(){
+  console.log("mark completed has been clicked");
+  firebase.database().ref('/userCases').child(key).remove();
+  tableResults.html(' ');
+  results();
+  getFire();
+  $("#person").html("");
+  $("#patient").html("");
+  $("#number").html("");
+  $("#medicalLoc").html("");
+  $("#medicalAllergic").html("");
+  $("#medicalHistory").html("");
+  $("#chief-complaint").html("");
+  $("#activeCaseView").html("Active Case: ");
+})
 });
-
-
 function getDirections() {
 
   var userLat = '';
