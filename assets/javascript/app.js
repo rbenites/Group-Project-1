@@ -1,3 +1,5 @@
+/* jshint esversion: 6 */
+
 /*:::::::: FireBase Connect :::::::::*/
 var config = {
   apiKey: "AIzaSyD55v0OO7fbqD_SZqP0D4bw-2DrC5GUpDQ",
