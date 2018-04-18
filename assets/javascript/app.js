@@ -29,8 +29,8 @@ var medical = '';
 var complaint = '';
 var d = new Date();
 var gMapsAPIKey = 'AIzaSyCF_5x7AkAOH8T7ijrquPSF5Lo3dullSiA';
-var lat = "";
-var lon = "";
+var address = '';
+var userAddress = '';
 
 /* Start the JS setup with document.ready*/
 $(document).ready(function () {
@@ -61,16 +61,20 @@ $("body").on("click", '.vw', function (e) {
   database = firebase.database();
   var ref = database.ref('/userCases');
   ref.on("value", function (snapshot) {
-  var csDta = snapshot.val();
-  $("#person").html(csDta[key].name);
-  $("#patient").html(csDta[key].person);
-  $("#number").html(csDta[key].number);
-  $("#medicalLoc").html(csDta[key].loc);
-  $("#medicalAllergic").html(csDta[key].allergies);
-  $("#medicalHistory").html(csDta[key].medical);
-  $("#chief-complaint").html(csDta[key].complaint);
-  $("#activeCaseView").html("Active Case: " + csDta[key].age + " y/o" + " & gender: " + csDta[key].gender);
-  })
+    var csDta = snapshot.val();
+    $("#person").html(csDta[key].name);
+    $("#patient").html(csDta[key].person);
+    $("#number").html(csDta[key].number);
+    $("#medicalLoc").html(csDta[key].loc);
+    $("#medicalAllergic").html(csDta[key].allergies);
+    $("#medicalHistory").html(csDta[key].medical);
+    $("#chief-complaint").html(csDta[key].complaint);
+    $("#activeCaseView").html("Active Case: " + csDta[key].age + " y/o" + " & gender: " + csDta[key].gender);
+    userAddress = csDta[key].address;
+  });
+
+
+  console.log(userAddress);
 });
 
 
@@ -90,9 +94,9 @@ function getDirections() {
       rezQrlat = 34.0753;
       rezQrlon = -118.3804;
 
-      database.ref('/userCases').on("child_added", function (snapshot) {
-        userAddress = snapshot.val().address;
-      });
+      // database.ref('/userCases').on("child_added", function (snapshot) {
+      //   userAddress = snapshot.val().address;
+      // });
 
       var dirEmbed = $("<iframe>");
       dirEmbed.attr("src", "https://www.google.com/maps/embed/v1/directions?key=" + gMapsAPIKey + "&origin=" + rezQrlat + ',' + rezQrlon + "&destination=" + userAddress);
@@ -197,7 +201,7 @@ function processForm() {
     aller = $("#allergies").val().trim();
     medical = $("#mdclCond").val().trim();
     complaint = $("#inputComplaint").val().trim();
-    address= $("#inputAddress").val().trim();
+    address = $("#inputAddress").val().trim();
 
     /* This code pushes the form info to Firebase DB*/
     database.ref('/userCases').push({
@@ -260,6 +264,6 @@ function jsSetup() {
   results();
   getFire();
   getDirections();
- 
+
 
 }
