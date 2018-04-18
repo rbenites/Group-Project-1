@@ -73,7 +73,7 @@ $("body").on("click", '.vw', function (e) {
     $("#medicalHistory").html(csDta[key].medical);
     $("#chief-complaint").html(csDta[key].complaint);
     $("#activeCaseView").html("Active Case: " + csDta[key].age + " y/o" + " & gender: " + csDta[key].gender);
-      $("#mark-completed").attr("data-key", k);
+    $("#mark-completed").attr("data-key", k);
     userAddress = csDta[key].address;
   });
 
@@ -83,7 +83,7 @@ $("body").on("click", '.vw', function (e) {
 
 
 
-$("#mark-completed").on("click", function(){
+$("#mark-completed").on("click", function () {
   console.log("mark completed has been clicked");
   firebase.database().ref('/userCases').child(key).remove();
   tableResults.html(' ');
@@ -97,21 +97,18 @@ $("#mark-completed").on("click", function(){
   $("#medicalHistory").html("");
   $("#chief-complaint").html("");
   $("#activeCaseView").html("Active Case: ");
-})
 });
+
 function getDirections() {
 
-  var rezQrlat = '';
-  var rezQrlon = '';
+  if (userAddress == null) {
+    console.log("No address!");
+  } else {
+    var rezQrlat = '';
+    var rezQrlon = '';
 
-  $('#directions-btn').on('click', function () {
-    console.log("get directions has been clicked");
-    // wunderground weather api
-    var queryURLLocation = "https://api.wunderground.com/api/828d2683238be78a/geolookup/q/autoip.json";
-    $.ajax({
-      url: queryURLLocation,
-      method: "GET"
-    }).then(function (response) {
+    $('#directions-btn').on('click', function () {
+      console.log("get directions has been clicked");
       rezQrlat = 34.0753;
       rezQrlon = -118.3804;
 
@@ -119,7 +116,7 @@ function getDirections() {
       //   userAddress = snapshot.val().address;
       // });
 
-      var dirEmbed = $("<iframe>");
+      var dirEmbed = $("<iframe>"); 
       dirEmbed.attr("src", "https://www.google.com/maps/embed/v1/directions?key=" + gMapsAPIKey + "&origin=" + rezQrlat + ',' + rezQrlon + "&destination=" + userAddress);
       dirEmbed.attr("width", "50%");
       dirEmbed.attr("height", "450");
@@ -128,7 +125,7 @@ function getDirections() {
       dirEmbed.addClass("mt-4");
       $("#get-directions").html(dirEmbed);
     });
-  });
+  }
 }
 
 function getFire() {
