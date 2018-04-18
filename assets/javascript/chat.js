@@ -74,7 +74,7 @@ console.log(chtMsg);
     });
 
   } else {
-    chsnChat = chatResqe;
+   var chsnChat = chatResqe;
     var ref = database.ref('chat/' + chsnChat);
     ref.on("value", function (snapshot) {
       var chtDta = snapshot.val();
@@ -90,9 +90,6 @@ console.log(chtMsg);
       }
     });
 
-
-
-    alert('hey hey E');
   }
 
 
