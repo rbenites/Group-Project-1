@@ -1,28 +1,25 @@
 /* Start the JS setup with document.ready*/
 $(document).ready(function () {
-  chatInit();
 
+  console.log(document.title);
+  chatInit();
+  fireGet();
   // I commented  your function calls  bec I eded to set it up for you. You can now go back through your code and send them through to two functions I created for you.  
   //  rChat(chtMsg);  ~ rescuer function 
   //  eChat(chtMsg);  ~ person in trouble function 
 
-  var bool = true;
+
   $('.emt_send').on('click', function (e) {
     e.preventDefault();
     var chtMsg = $('#chatMsg').val().trim();
     $('.alert').addClass('d-none');
-    console.log(bool);
-    if (bool === true) {
-      rChat(chtMsg);
-      bool = false;
-    } else {
-      eChat(chtMsg);
-      bool = true;
-    }
+    fireGet(chtMsg);
+   console.log(chtMsg);
   });
   //  user_fireChat();
   //  emt_fireChat();
 });
+
 
 
 function rChat(rMsg) {
@@ -47,17 +44,70 @@ function rChat(rMsg) {
   rIn.append(rvTr);
   rIn.append(rezMz);
   chtBdy.append(rIn);
-  //chtBdy.append(time);
-  //rIn.append(time);
-  database.ref('chat/chatResqr').push({
-    emt_name: rName,
-    text_input: rMsg,
-    //dateAdded: firebase.database.ServerValue.TIMESTAMP
-  }, function (errorObject) {
-    console.log("The read failed: " + errorObject.code);
-  });
 
 }
+
+
+function fireGet(chtMsg) {
+console.log(chtMsg);
+  var chatResqr = 'chatResqr';
+  var chatResqe = 'chatResqe';
+  var chsnChat = '';
+  database = firebase.database();
+
+  if (document.title === 'RezQr Dashboard') {
+    alert('hey hey R');
+    var chsnChat = chatResqr;
+    var ref = database.ref('chat/' + chsnChat);
+    ref.on("value", function (snapshot) {
+      var chtDta = snapshot.val();
+      console.log(chtDta);
+      var keys = Object.keys(chtDta);
+      console.log(keys);
+      for (var x = 0; x < keys.length; x++) {
+        var k = keys[x];
+        // console.log(chtDta[k].text_input);
+        console.log(chtDta[k].text_input);
+        rChat(chtDta[k].text_input);
+
+      }
+    });
+
+  } else {
+    chsnChat = chatResqe;
+    var ref = database.ref('chat/' + chsnChat);
+    ref.on("value", function (snapshot) {
+      var chtDta = snapshot.val();
+      console.log(chtDta);
+      var keys = Object.keys(chtDta);
+      console.log(keys);
+      for (var x = 0; x < keys.length; x++) {
+        var k = keys[x];
+        // console.log(chtDta[k].text_input);
+        console.log(chtDta[k].text_input);
+        eChat(chtDta[k].text_input);
+
+      }
+    });
+
+
+
+    alert('hey hey E');
+  }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
 // this creates the ride side chat styling. 
 function eChat(eMsg) {
   var eName = "Avi";
@@ -65,6 +115,9 @@ function eChat(eMsg) {
   var date = d.toLocaleString([], {
     hour12: true
   });
+
+
+
 
   var chtBdy = $('#chtBdy');
   var rIn = $('<div>').addClass('chat  chat-left');
@@ -81,14 +134,9 @@ function eChat(eMsg) {
   chtBdy.append(rIn);
   chtBdy.append(time);
   //rIn.append(time);
-  database.ref('chat/chatResqe').push({
-    emt_name: eName,
-    text_input: eMsg,
-    //dateAdded: firebase.database.ServerValue.TIMESTAMP
-  }, function (errorObject) {
-    console.log("The read failed: " + errorObject.code);
-  });
+
 }
+
 
 
 
