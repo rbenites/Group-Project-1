@@ -248,15 +248,9 @@ function processForm() {
     console.log(alert);
     alert.text('You message has been sent. A chat will open up shortly');
     dynSt.append(alert);
-    setTimeout(() => {
       report.addClass('d-none');
       secSte.removeClass('d-none').addClass('d-block');
-
-      // 	chatIamge.attr('src', 'img/chat_2.png');
-    }, 3000);
-    setTimeout(() => {
-      setChat();
-    }, 10000);
+      chatInit();
   });
 
 }
