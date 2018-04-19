@@ -1,7 +1,25 @@
 /* Start the JS setup with document.ready*/
 $(document).ready(function () {
   chatInit();
+  var database = firebase.database();
+  var ref = database.ref('chat/chatResqe');
+  ref.limitToLast(1).on("child_added", function (snapshot) {
+    $('.alert').addClass('d-none ');
+    var message = snapshot.val();
 
+    var eMsg = message.text_input;
+
+    var date = message.date_stamp;
+    eChat(eMsg, date);
+  });
+  var refR = database.ref('chat/chatResqr');
+  refR.limitToLast(1).on("child_added", function (snapshot) {
+    $('.alert').addClass('d-none ');
+  var message = snapshot.val();
+   var rMsg = message.text_input;
+   var date = message.date_stamp;
+        rChat(rMsg, date);
+      });
   $('body').on('click','.emt_send ',  function (e) {
     e.preventDefault();
     $('.alert').addClass('d-none ');
@@ -9,7 +27,6 @@ $(document).ready(function () {
     if (document.title === 'RezQr Dashboard') {
       fireRSet(chtMsg);
     } else {
-      alert('in else');
       fireESet(chtMsg);
     }
   });
@@ -29,8 +46,6 @@ function fireRSet(chtMsg) {
   }, function (errorObject) {
     console.log("The read failed: " + errorObject.code);
   });
-  eChat();
-  rChat();
 }
 
 
@@ -49,24 +64,10 @@ function fireESet(chtMsg) {
   }, function (errorObject) {
     console.log("The read failed: " + errorObject.code);
   });
-  eChat();
-  rChat();
-
 }
 
 // this creates the ride side chat styling. 
-function eChat() {
-  var database = firebase.database();
-  var ref = database.ref('chat/chatResqe');
-  ref.limitToLast(1).on("child_added", function (snapshot) {
-
-    var message = snapshot.val();
-
-    var eMsg = message.text_input;
-
-    var date = message.date_stamp.toLocaleString([], {
-      hour12: true
-    });
+function eChat(eMsg, date) {
     var chtBdy = $('.chtBdy');
     var rIn = $('<div>').addClass('chat  chat-left');
     var rvTr = $('<div>').addClass('chat-avatar user_in_emergency');
@@ -82,19 +83,11 @@ function eChat() {
     chtBdy.append(rIn);
     chtBdy.append(time);
     //rIn.append(time);
-  });
+
 }
 
-function rChat() {
+function rChat(rMsg, date) {
 
-  var database = firebase.database();
-  var ref = database.ref('chat/chatResqr');
-  ref.limitToLast(1).on("child_added", function (snapshot) {
-  var message = snapshot.val();
-   var rMsg = message.text_input;
-   var date = message.date_stamp.toLocaleString([], {
-          hour12: true
-        });
         var chtBdy = $('.chtBdy');
         // this creates the left side chat styling. 
         var rIn = $('<div>').addClass('chat');
@@ -110,7 +103,7 @@ function rChat() {
         rIn.append(rvTr);
         rIn.append(rezMz);
         chtBdy.append(rIn);
-      });
+
     }
       function chatInit() {
         $('chatst').html(' ');
