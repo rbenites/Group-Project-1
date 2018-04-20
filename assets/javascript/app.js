@@ -65,7 +65,6 @@ $("body").on("click", '.vw', function (e) {
   database = firebase.database();
   var ref = database.ref('/userCases');
   ref.on("value", function (snapshot) {
-
     var csDta = snapshot.val();
     $("#person").html(csDta[key].name);
     $("#patient").html(csDta[key].person);
@@ -74,12 +73,10 @@ $("body").on("click", '.vw', function (e) {
     $("#medicalAllergic").html(csDta[key].allergies);
     $("#medicalHistory").html(csDta[key].medical);
     $("#chief-complaint").html(csDta[key].complaint);
-    $("#activeCaseView").html("Active Case: " + csDta[key].age + " y/o" + " & gender: " + csDta[key].gender);
+    $("#activeCaseView").html("Active Case: " + csDta[key].age + " y/o " + csDta[key].gender);
     $("#mark-completed").attr("data-key", key);
     userAddress = csDta[key].address;
   });
-
-
   console.log(userAddress);
 
 
@@ -121,12 +118,14 @@ function getDirections() {
       var dirEmbed = $("<iframe>");
       dirEmbed.attr("src", "https://www.google.com/maps/embed/v1/directions?key=" + gMapsAPIKey + "&origin=" + rezQrlat + ',' + rezQrlon + "&destination=" + userAddress);
       dirEmbed.attr("width", "50%");
-      dirEmbed.attr("height", "450");
+      dirEmbed.attr("height", "300");
       dirEmbed.attr("frameborder", "0");
       dirEmbed.attr("style", "border:0");
       dirEmbed.addClass("mt-4");
       mpCont.append(dirEmbed);
-      $("#get-directions").html(mpCont);
+      $("#map-location").html(mpCont);
+
+      console.log(dirEmbed);
     });
   }
 }
