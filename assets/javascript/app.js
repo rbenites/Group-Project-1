@@ -96,6 +96,7 @@ $("#mark-completed").on("click", function () {
   $("#medicalHistory").html("");
   $("#chief-complaint").html("");
   $("#activeCaseView").html("Active Case: ");
+  $("#map-location").empty();
 });
 });
 function getDirections() {
