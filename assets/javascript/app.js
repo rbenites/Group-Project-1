@@ -46,6 +46,7 @@ $("body").on("click", '.dr', function (e) {
   // this is the remove button logic. It gets the data-key that I added it getFire and then removes it in Firebase, then resets table
   e.preventDefault();
   var key = $(this).data('key');
+  
   console.log(key);
   if (confirm('Are you sure?')) {
     firebase.database().ref('/userCases').child(key).remove();
@@ -59,6 +60,7 @@ $("body").on("click", '.dr', function (e) {
 $("body").on("click", '.vw', function (e) {
   e.preventDefault();
   var key = $(this).data('key');
+
   console.log(key);
   database = firebase.database();
   var ref = database.ref('/userCases');
@@ -73,13 +75,13 @@ $("body").on("click", '.vw', function (e) {
     $("#medicalHistory").html(csDta[key].medical);
     $("#chief-complaint").html(csDta[key].complaint);
     $("#activeCaseView").html("Active Case: " + csDta[key].age + " y/o" + " & gender: " + csDta[key].gender);
-    $("#mark-completed").attr("data-key", k);
+    $("#mark-completed").attr("data-key", key);
     userAddress = csDta[key].address;
   });
 
 
   console.log(userAddress);
-});
+
 
 
 
@@ -98,7 +100,7 @@ $("#mark-completed").on("click", function () {
   $("#chief-complaint").html("");
   $("#activeCaseView").html("Active Case: ");
 });
-
+});
 function getDirections() {
 
   if (userAddress == null) {
