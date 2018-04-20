@@ -75,10 +75,11 @@ $("body").on("click", '.vw', function (e) {
     $("#activeCaseView").html("Active Case: " + csDta[key].age + " y/o" + " & gender: " + csDta[key].gender);
     $("#mark-completed").attr("data-key", k);
     userAddress = csDta[key].address;
+    console.log(userAddress);
   });
 
 
-  console.log(userAddress);
+  // console.log(userAddress);
 });
 
 
