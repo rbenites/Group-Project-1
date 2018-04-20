@@ -63,7 +63,6 @@ $("body").on("click", '.vw', function (e) {
   database = firebase.database();
   var ref = database.ref('/userCases');
   ref.on("value", function (snapshot) {
-
     var csDta = snapshot.val();
     $("#person").html(csDta[key].name);
     $("#patient").html(csDta[key].person);
@@ -75,11 +74,8 @@ $("body").on("click", '.vw', function (e) {
     $("#activeCaseView").html("Active Case: " + csDta[key].age + " y/o" + " & gender: " + csDta[key].gender);
     $("#mark-completed").attr("data-key", k);
     userAddress = csDta[key].address;
-    console.log(userAddress);
   });
-
-
-  // console.log(userAddress);
+  console.log(userAddress);
 });
 
 
