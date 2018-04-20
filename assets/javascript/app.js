@@ -46,6 +46,7 @@ $("body").on("click", '.dr', function (e) {
   // this is the remove button logic. It gets the data-key that I added it getFire and then removes it in Firebase, then resets table
   e.preventDefault();
   var key = $(this).data('key');
+  
   console.log(key);
   if (confirm('Are you sure?')) {
     firebase.database().ref('/userCases').child(key).remove();
@@ -59,6 +60,7 @@ $("body").on("click", '.dr', function (e) {
 $("body").on("click", '.vw', function (e) {
   e.preventDefault();
   var key = $(this).data('key');
+
   console.log(key);
   database = firebase.database();
   var ref = database.ref('/userCases');
@@ -71,12 +73,12 @@ $("body").on("click", '.vw', function (e) {
     $("#medicalAllergic").html(csDta[key].allergies);
     $("#medicalHistory").html(csDta[key].medical);
     $("#chief-complaint").html(csDta[key].complaint);
-    $("#activeCaseView").html("Active Case: " + csDta[key].age + " y/o" + " & gender: " + csDta[key].gender);
-    $("#mark-completed").attr("data-key", k);
+    $("#activeCaseView").html("Active Case: " + csDta[key].age + " y/o " + csDta[key].gender);
+    $("#mark-completed").attr("data-key", key);
     userAddress = csDta[key].address;
   });
   console.log(userAddress);
-});
+
 
 
 
@@ -95,7 +97,7 @@ $("#mark-completed").on("click", function () {
   $("#chief-complaint").html("");
   $("#activeCaseView").html("Active Case: ");
 });
-
+});
 function getDirections() {
 
   if (userAddress == null) {
@@ -116,12 +118,14 @@ function getDirections() {
       var dirEmbed = $("<iframe>");
       dirEmbed.attr("src", "https://www.google.com/maps/embed/v1/directions?key=" + gMapsAPIKey + "&origin=" + rezQrlat + ',' + rezQrlon + "&destination=" + userAddress);
       dirEmbed.attr("width", "50%");
-      dirEmbed.attr("height", "450");
+      dirEmbed.attr("height", "300");
       dirEmbed.attr("frameborder", "0");
       dirEmbed.attr("style", "border:0");
       dirEmbed.addClass("mt-4");
       mpCont.append(dirEmbed);
-      $("#get-directions").html(mpCont);
+      $("#map-location").html(mpCont);
+
+      console.log(dirEmbed);
     });
   }
 }

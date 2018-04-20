@@ -41,36 +41,34 @@
             <div class="row">
                 <h2 class="green_lgt mt-3 mb-2">
                     <span id="lname" class="redQ">
-                        <strong>Active Case: &nbsp;</strong>22 Y/O Female</span>
+                        <strong id="activeCaseView">Active Case: 16y/o male&nbsp;</strong></span>
                 </h2>
                 <div class="col-12">
                     <div class="row">
                         <div class="col-12 col-md-6">
                             <p class="lead">
                                 <strong class="title">Patient Name:</strong>
-                                <span id="person">&nbsp;Harry P.</span>
+                                <span id="person">&nbsp;Omar Patel</span>
                                 <br>
                                 <strong class="title">Patient:</strong>
-                                <span id="patient">&nbsp;Is Patient</span>
+                                <span id="patient">&nbsp;You</span>
                                 <br>
                                 <strong class="title">Number:</strong>
-                                <span id="number">&nbsp;213-757-2732</span>
+                                <span id="number">&nbsp;213-312-1234</span>
                                 <br>
                                 <strong class="title">LOC:</strong>
-                                <span id="medical">&nbsp;Person is alert</span>
+                                <span id="medicalLoc">&nbsp;abnormal</span>
                                 <br>
                                 <strong class="title">Allergic To:</strong>
-                                <span id="medical">&nbsp;Latex</span>
+                                <span id="medicalAllergic">&nbsp;latex</span>
                                 <br>
                                 <strong class="title">Medical History:</strong>
-                                <span id="medical">&nbsp;Diabetes</span>
+                                <span id="medicalHistory">&nbsp;stroke</span>
                             </p>
                         </div>
                         <div class="col-12  col-md-6">
-                            <h3 class="bold mb-1 redQ">Patient's Chief Complaint</h3>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo unde harum quam molestiae facere
-                                necessitatibus, dolorem nihil, reiciendis perspiciatis libero ipsum. Nam dolores soluta ad
-                                hic quas laborum consectetur harum.
+                            <h3 class="bold mb-1 redQ">Patients Chief Complaint</h3>
+                            <p id="chief-complaint">Help! I've fallen and I can't get up!
                             </p>
                             <div class="row">
                                 <div class="col-12 col-md-6">
@@ -79,7 +77,7 @@
                                         &nbsp; Get Directions</button>
                                 </div>
                                 <div class="col-12 col-md-6">
-                                    <button type="submit" class="btn btn-light btn-lg w-100 mt-3">
+                                    <button type="submit" class="btn btn-light btn-lg w-100 mt-3" id="mark-completed">
 
 
                                         <i class="fa fa-check" aria-hidden="true"></i>&nbsp;Mark Completed</button>
@@ -88,8 +86,14 @@
                         </div>
                     </div>
 
-                    <div class="row" id="get-directions">
-                    </div>
+                    <section id="directions">
+                        <div class="container-fluid">
+                            <div class="row-fluid">
+                                <div id="map-location" class="col-12 py-1 px-1">
+                                </div>
+                            </div>
+                        </div>
+                    </section>
                 </div>
             </div>
         </div>
